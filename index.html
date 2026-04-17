@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - Fixed Master</title>
+    <title>TAEM BAKERY & PASTRY - Persistent Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --mocha-bg: #3B270C;    
             --canary-yellow: #FFEF00; 
-            --p-red: #D32F2F;        
             --p-white: #FFFFFF;    
         }
 
@@ -43,7 +42,7 @@
 
         .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary-yellow); color: var(--mocha-bg); padding: 18px 45px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: 900; font-size: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); border: 2px solid var(--mocha-bg); }
 
-        /* ADMIN DASHBOARD */
+        /* ADMIN */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; color: #333; }
         .admin-section { border: 2px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 25px; background: #fdfdfd; }
         .btn { padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; width: 100%; }
@@ -99,7 +98,7 @@
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
     <h3>New Category</h3>
-    <input type="text" id="nCatId" placeholder="Unique ID (e.g. bread)">
+    <input type="text" id="nCatId" placeholder="Unique ID (e.g. donuts)">
     <input type="text" id="nCatEn" placeholder="Name (English)">
     <input type="text" id="nCatAm" placeholder="Name (Amharic)">
     <input type="file" onchange="APP.handleImg(this)">
@@ -133,11 +132,14 @@
             try {
                 const r = await fetch(`${this.URL}?cb=${Date.now()}`);
                 const j = await r.json();
-                this.data = j.items || [];
-                this.cats = j.cats || [];
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
-                this.render();
-            } catch(e) { console.error("Load Failed"); }
+                // ONLY UPDATE IF NOT IN MIDDLE OF LOCAL EDIT
+                if(!document.getElementById('adminDashboard').style.display || document.getElementById('adminDashboard').style.display === 'none') {
+                    this.data = j.items || [];
+                    this.cats = j.cats || [];
+                    if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+                    this.render();
+                }
+            } catch(e) { console.log("Cloud pull deferred..."); }
         },
 
         render: function() {
@@ -202,10 +204,10 @@
         closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex') this.closeModals(); },
         verifyLogin: function() { 
             if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
-                document.getElementById('adminDashboard').style.display='block'; this.closeModals(); 
-            } else { alert("Error"); }
+                document.getElementById('adminDashboard').style.display='block'; this.closeModals(); this.render();
+            } else { alert("Invalid Credentials"); }
         },
-        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
+        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; this.init(); },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
@@ -218,7 +220,7 @@
             this.cats = this.cats.map(c => c.id === this.editId ? {...c, en: newEn, am: newAm} : c);
             this.closeModals(); this.render();
         },
-        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.data = this.data.filter(i => i.cat != id); this.render(); } },
+        deleteCat: function(id) { if(confirm("Delete category?")) { this.cats = this.cats.filter(c => c.id != id); this.data = this.data.filter(i => i.cat != id); this.render(); } },
         createNewCat: function() { 
             const id = document.getElementById('nCatId').value.trim().toLowerCase(); 
             if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.imgTmp=""; this.closeModals(); this.render(); } 
@@ -228,13 +230,13 @@
             this.imgTmp=""; this.closeModals(); this.render(); 
         },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.renderAdmin(); },
-        deleteItem: function(idx) { if(confirm("Delete item?")) { this.data.splice(idx, 1); this.renderAdmin(); } },
+        deleteItem: function(idx) { if(confirm("Delete?")) { this.data.splice(idx, 1); this.renderAdmin(); } },
         saveToCloud: async function() {
             const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Live Menu Updated!"); this.init();
-            } catch(e) { alert("Error"); }
+                alert("Live Menu Updated Successfully!");
+            } catch(e) { alert("Network Error. Try again."); }
             finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; }
         }
     };
