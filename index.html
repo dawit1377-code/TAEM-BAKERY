@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - Final Master</title>
+    <title>TAEM BAKERY & PASTRY - Fixed Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -119,8 +119,8 @@
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
     <h2 style="color:var(--mocha-bg); margin-bottom:15px;">Admin Login</h2>
-    <input type="text" id="uIn" placeholder="Username" value="" autocomplete="off" style="text-align:center;">
-    <input type="password" id="pIn" placeholder="Password" value="" autocomplete="off" style="text-align:center;">
+    <input type="text" id="uIn" placeholder="Username" value="" style="text-align:center;">
+    <input type="password" id="pIn" placeholder="Password" value="" style="text-align:center;">
     <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha-bg); color:var(--canary-yellow); height:60px; margin-top:15px;">LOGIN</button>
 </div></div>
 
@@ -131,13 +131,13 @@
 
         init: async function() {
             try {
-                const r = await fetch(`${this.URL}?cb=${Date.now()}`); // Cache Buster
+                const r = await fetch(`${this.URL}?cb=${Date.now()}`);
                 const j = await r.json();
                 this.data = j.items || [];
                 this.cats = j.cats || [];
                 if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
                 this.render();
-            } catch(e) { console.error("Network Error"); }
+            } catch(e) { console.error("Load Failed"); }
         },
 
         render: function() {
@@ -145,7 +145,7 @@
             document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
             document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
             document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
-            document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "አሁኑኑ ይደውሉ";
+            document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
 
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
@@ -181,9 +181,9 @@
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <div style="background:#fff; border:1px solid #ddd; padding:15px; margin-bottom:15px; border-radius:12px; ${i.hidden ? 'opacity:0.4' : ''}">
-                    <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="English Name">
-                    <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="Amharic Name">
-                    <input value="${i.price}" onchange="APP.data[${idx}].price=this.value" type="number" style="color:red; font-weight:bold;">
+                    <input value="${i.en}" onchange="APP.data[${idx}].en=this.value">
+                    <input value="${i.am}" onchange="APP.data[${idx}].am=this.value">
+                    <input value="${i.price}" onchange="APP.data[${idx}].price=this.value" type="number">
                     <select onchange="APP.data[${idx}].cat=this.value">
                         ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>${c.en}</option>`).join('')}
                     </select>
@@ -198,17 +198,12 @@
 
         setCat: function(id) { this.activeCat = id; this.render(); },
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
-        showLogin: function(e) { 
-            e.stopPropagation(); 
-            document.getElementById('uIn').value = ""; 
-            document.getElementById('pIn').value = ""; 
-            document.getElementById('loginOverlay').style.display='flex'; 
-        },
+        showLogin: function(e) { e.stopPropagation(); document.getElementById('uIn').value=""; document.getElementById('pIn').value=""; document.getElementById('loginOverlay').style.display='flex'; },
         closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex') this.closeModals(); },
         verifyLogin: function() { 
             if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
                 document.getElementById('adminDashboard').style.display='block'; this.closeModals(); 
-            } else { alert("Invalid Credentials"); }
+            } else { alert("Error"); }
         },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
@@ -220,26 +215,26 @@
         applyCatRename: function() { 
             const newEn = document.getElementById('eCatEn').value;
             const newAm = document.getElementById('eCatAm').value;
-            this.cats.forEach(c => { if(c.id === this.editId) { c.en = newEn; c.am = newAm; } });
-            this.closeModals(); this.renderAdmin();
+            this.cats = this.cats.map(c => c.id === this.editId ? {...c, en: newEn, am: newAm} : c);
+            this.closeModals(); this.render();
         },
-        deleteCat: function(id) { if(confirm("Delete this category and all related items?")) { this.cats = this.cats.filter(c => c.id != id); this.data = this.data.filter(i => i.cat != id); this.renderAdmin(); } },
+        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.data = this.data.filter(i => i.cat != id); this.render(); } },
         createNewCat: function() { 
             const id = document.getElementById('nCatId').value.trim().toLowerCase(); 
-            if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.closeModals(); this.renderAdmin(); } 
+            if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.imgTmp=""; this.closeModals(); this.render(); } 
         },
         createNewItem: function() { 
             this.data.push({ id: Date.now(), cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false }); 
-            this.closeModals(); this.renderAdmin(); 
+            this.imgTmp=""; this.closeModals(); this.render(); 
         },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.renderAdmin(); },
         deleteItem: function(idx) { if(confirm("Delete item?")) { this.data.splice(idx, 1); this.renderAdmin(); } },
         saveToCloud: async function() {
-            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING LIVE MENU..."; b.disabled = true;
+            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Success! Live Menu Updated."); this.init();
-            } catch(e) { alert("Sync Error. Check Connection."); }
+                alert("Live Menu Updated!"); this.init();
+            } catch(e) { alert("Error"); }
             finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; }
         }
     };
