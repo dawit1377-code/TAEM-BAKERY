@@ -3,44 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY - SGS Professional Release</title>
+    <title>TAEM BAKERY - SGS Professional Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@400;600;800&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --mocha: #3B270C; --canary: #FFEF00; --white: #FFFFFF; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--mocha); color: var(--white); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
+        body { background: var(--mocha); color: var(--white); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 120px; overflow-x: hidden; }
         
         /* HEADER */
         .header { background: var(--mocha); height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--canary); }
-        .menu-toggle { position: absolute; left: 15px; top: 25px; font-size: 30px; color: var(--canary); cursor: pointer; }
-        .lang-btn { position: absolute; right: 15px; top: 25px; background: var(--canary); color: var(--mocha); border: none; padding: 8px 15px; border-radius: 20px; font-weight: 800; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 28px; color: var(--canary); text-transform: uppercase; }
-        .sub-labels { text-align: center; }
-        #subTitle { font-weight: 800; letter-spacing: 4px; font-size: 14px; }
-        #vatNote { font-size: 11px; color: var(--canary); }
+        .menu-toggle { position: absolute; left: 15px; top: 25px; font-size: 32px; color: var(--canary); cursor: pointer; }
+        .lang-btn { position: absolute; right: 15px; top: 25px; background: var(--canary); color: var(--mocha); border: none; padding: 10px 15px; border-radius: 20px; font-weight: 800; }
+        .header h1 { font-family: 'Playfair Display'; font-size: 28px; color: var(--canary); text-transform: uppercase; text-align: center; }
+        #subTitle { font-weight: 800; letter-spacing: 5px; font-size: 14px; text-align: center; }
+        #vatNote { font-size: 11px; color: var(--canary); text-align: center; }
 
-        /* NAV & CARDS */
-        .nav-bar { display: flex; overflow-x: auto; padding: 20px 10px; background: #fff; position: sticky; top: 160px; z-index: 900; border-bottom: 1px solid #ddd; }
+        /* NAVIGATION - MASTER SPECS */
+        .nav-bar { display: flex; overflow-x: auto; padding: 20px 10px; background: #fff; position: sticky; top: 160px; z-index: 900; border-bottom: 1px solid #ddd; scrollbar-width: none; }
         .nav-item { text-align: center; min-width: 160px; opacity: 0.4; transition: 0.3s; color: #333; }
         .nav-item.active { opacity: 1; transform: scale(1.05); }
-        .nav-item img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--canary); }
-        
+        .nav-item img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--canary); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .nav-item p { font-weight: 800; margin-top: 10px; font-size: 16px; }
+
+        /* MENU CARDS - MASTER SPECS */
         .container { padding: 15px; }
-        .card { display: flex; align-items: center; background: white; border-radius: 15px; margin-bottom: 15px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .food-img { width: 135px; height: 135px; border-radius: 10px; object-fit: cover; border: 3px solid var(--canary); margin-right: 15px; }
+        .card { display: flex; align-items: center; background: white; border-radius: 15px; margin-bottom: 20px; padding: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); border: 1px solid #eee; }
+        .food-img { width: 135px; height: 135px; border-radius: 12px; object-fit: cover; border: 4px solid var(--canary); margin-right: 18px; }
         .food-info { flex: 1; color: var(--mocha); }
-        .food-title { font-size: 20px; font-weight: 800; }
-        .price-tag { background: var(--canary); padding: 3px 10px; border-radius: 5px; font-weight: 900; display: inline-block; margin-top: 5px; }
+        .food-title { font-size: 22px; font-weight: 800; line-height: 1.2; }
+        .price-tag { background: var(--canary); padding: 5px 15px; border-radius: 6px; font-weight: 900; font-size: 18px; display: inline-block; margin-top: 8px; }
 
-        .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary); color: var(--mocha); padding: 15px 40px; border-radius: 50px; font-weight: 900; text-decoration: none; z-index: 2000; border: 2px solid var(--mocha); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary); color: var(--mocha); padding: 18px 45px; border-radius: 50px; font-weight: 900; text-decoration: none; z-index: 2000; border: 2px solid var(--mocha); box-shadow: 0 8px 20px rgba(0,0,0,0.5); font-size: 18px; }
 
-        /* ADMIN & MODALS */
+        /* ADMIN DASHBOARD - PERFECTED */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y:auto; color:#333; }
-        .admin-card { background:#f9f9f9; border:1px solid #ddd; padding:15px; border-radius:10px; margin-bottom:15px; }
-        input, select { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 8px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:4000; align-items:center; justify-content:center; }
-        .modal { background:#fff; padding:20px; border-radius:15px; width:90%; max-width:400px; }
+        .admin-header { display:flex; justify-content:space-between; align-items:center; background:var(--mocha); padding:20px; color:var(--canary); border-radius:15px; margin-bottom:20px; }
+        .admin-section { background:#f9f9f9; border:2px solid #eee; padding:15px; border-radius:12px; margin-bottom:20px; }
+        .admin-card { background:white; border:1px solid #ddd; padding:12px; border-radius:10px; margin-bottom:10px; }
+        input, select { width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
+        .btn { padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 800; width: 100%; margin-top: 10px; }
+        
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:4000; align-items:center; justify-content:center; }
+        .modal { background:white; padding:25px; border-radius:20px; width:90%; max-width:450px; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)">
@@ -60,76 +64,82 @@
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2>MASTER ADMIN</h2>
-        <button onclick="APP.closeAdmin()" style="font-size:30px; border:none; background:none;">&times;</button>
+    <div class="admin-header">
+        <h2 style="margin:0">MANAGEMENT</h2>
+        <button onclick="APP.closeAdmin()" style="color:var(--canary); border:none; background:none; font-size:40px;">&times;</button>
     </div>
     
-    <div class="admin-card">
-        <h3>Categories</h3>
+    <div class="admin-section">
+        <h3>1. Categories</h3>
         <div id="admCats"></div>
-        <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.openModal('catMod')">+ New Category</button>
+        <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.openModal('catMod')">+ Add Category</button>
     </div>
 
-    <div class="admin-card">
-        <h3>Menu Items</h3>
-        <button class="btn" style="background:#27ae60; color:#fff;" onclick="APP.openModal('itemMod')">+ New Item</button>
+    <div class="admin-section">
+        <h3>2. Menu Items</h3>
+        <button class="btn" style="background:#27ae60; color:#fff; margin-bottom:15px;" onclick="APP.openModal('itemMod')">+ Add Menu Item</button>
         <div id="admItems"></div>
     </div>
-    <button id="syncBtn" onclick="APP.sync()" class="btn" style="background:var(--mocha); color:var(--canary); padding:20px; position:sticky; bottom:0;">💾 SAVE & SYNC ALL CHANGES</button>
+    
+    <button id="syncBtn" onclick="APP.sync()" class="btn" style="background:#27ae60; color:#fff; padding:25px; font-size:20px; position:sticky; bottom:0; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);">💾 SYNC UPDATES TO LIVE MENU</button>
 </div>
 
 <div id="catMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add Category</h3>
-    <input id="ncId" placeholder="id (e.g. cake)">
+    <h3>New Category</h3>
+    <input id="ncId" placeholder="Unique ID (e.g. cakes)">
     <input id="ncEn" placeholder="English Name">
     <input id="ncAm" placeholder="Amharic Name">
     <input type="file" onchange="APP.pick(this)">
-    <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.addCat()">Create</button>
+    <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.addCat()">Create Category</button>
 </div></div>
 
 <div id="itemMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
     <h3>Add Item</h3>
     <select id="niCat"></select>
-    <input id="niEn" placeholder="English Name">
-    <input id="niAm" placeholder="Amharic Name">
-    <input id="niPr" placeholder="Price" type="number">
+    <input id="niEn" placeholder="Item Name (English)">
+    <input id="niAm" placeholder="Item Name (Amharic)">
+    <input id="niPr" placeholder="Price (ETB)" type="number">
     <input type="file" onchange="APP.pick(this)">
-    <button class="btn" style="background:#27ae60; color:#fff;" onclick="APP.addItem()">Add</button>
+    <button class="btn" style="background:#27ae60; color:#fff;" onclick="APP.addItem()">Save Item</button>
 </div></div>
 
 <div id="logMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h2 style="text-align:center;">Admin Login</h2>
-    <input id="u" placeholder="Username">
-    <input id="p" placeholder="Password" type="password">
-    <button class="btn" style="background:var(--mocha); color:var(--canary);" onclick="APP.login()">Login</button>
+    <h2 style="text-align:center; color:var(--mocha);">Admin Login</h2>
+    <input id="u" placeholder="Username" style="text-align:center;">
+    <input id="p" placeholder="Password" type="password" style="text-align:center;">
+    <button class="btn" style="background:var(--mocha); color:var(--canary);" onclick="APP.login()">Access Dashboard</button>
 </div></div>
 
 <script>
     const APP = {
         EP: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
-        items: [], cats: [], lang: 'en', active: '', tmpImg: '',
+        items: [], cats: [], lang: 'en', active: '', tmpImg: '', MASTER_LOCK: false,
 
         init: async function() {
-            const cached = localStorage.getItem('SGS_MASTER_DATA');
-            if(cached) {
-                const d = JSON.parse(cached);
+            if(this.MASTER_LOCK) return;
+            // Immediate Local Load
+            const local = localStorage.getItem('TAEM_PRO_DATA');
+            if(local) {
+                const d = JSON.parse(local);
                 this.items = d.items; this.cats = d.cats;
                 if(this.cats.length && !this.active) this.active = this.cats[0].id;
                 this.render();
             }
+            // Fetch Latest
             try {
                 const r = await fetch(`${this.EP}?cb=${Date.now()}`);
                 const j = await r.json();
-                this.items = j.items || [];
-                this.cats = j.cats || [];
-                this.save();
-                if(this.cats.length && !this.active) this.active = this.cats[0].id;
-                this.render();
-            } catch(e) { console.log("Offline mode"); }
+                if(!this.MASTER_LOCK) {
+                    this.items = j.items || [];
+                    this.cats = j.cats || [];
+                    this.saveLocal();
+                    if(this.cats.length && !this.active) this.active = this.cats[0].id;
+                    this.render();
+                }
+            } catch(e) { console.warn("Cloud unreachable, using local data."); }
         },
 
-        save: function() { localStorage.setItem('SGS_MASTER_DATA', JSON.stringify({items:this.items, cats:this.cats})); },
+        saveLocal: function() { localStorage.setItem('TAEM_PRO_DATA', JSON.stringify({items:this.items, cats:this.cats})); },
 
         render: function() {
             const isEn = this.lang === 'en';
@@ -138,14 +148,14 @@
             
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.active==c.id?'active':''}" onclick="APP.setCat('${c.id}')">
-                    <img src="${c.img||''}">
+                    <img src="${c.img||''}" onerror="this.src='https://via.placeholder.com/150'">
                     <p>${isEn?c.en:c.am}</p>
                 </div>`).join('');
 
-            const filtered = this.items.filter(i => i.cat == this.active && !i.hide);
+            const filtered = this.items.filter(i => String(i.cat) === String(this.active) && !i.hide);
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
-                    <img src="${i.img||''}" class="food-img">
+                    <img src="${i.img||''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
                     <div class="food-info">
                         <div class="food-title">${isEn?i.en:i.am}</div>
                         <div class="price-tag">${i.price} ETB</div>
@@ -156,18 +166,23 @@
 
         renderAdmin: function() {
             document.getElementById('admCats').innerHTML = this.cats.map((c, idx) => `
-                <div style="border-bottom:1px solid #ddd; padding:10px 0;">
-                    <b>${c.en} (${c.am})</b>
-                    <input type="file" onchange="APP.updCatImg(${idx}, this)" style="border:none;">
-                    <button onclick="APP.delCat('${c.id}')" style="color:red; border:none; background:none;">Delete</button>
+                <div class="admin-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><b>${c.en}</b> (${c.am})</span>
+                        <button onclick="APP.delCat('${c.id}')" style="color:red; border:none; font-weight:bold; background:none;">Delete</button>
+                    </div>
+                    <input type="file" onchange="APP.updCatImg(${idx}, this)" style="border:none; font-size:12px; margin-top:5px;">
                 </div>`).join('');
             
             document.getElementById('admItems').innerHTML = this.items.map((i, idx) => `
                 <div class="admin-card">
-                    <input value="${i.en}" onchange="APP.items[${idx}].en=this.value">
-                    <input value="${i.price}" onchange="APP.items[${idx}].price=this.value">
-                    <button onclick="APP.items[${idx}].hide=!APP.items[${idx}].hide; APP.renderAdmin()">${i.hide?'Unhide':'Hide'}</button>
-                    <button onclick="APP.items.splice(${idx},1); APP.renderAdmin()" style="color:red;">Delete</button>
+                    <input value="${i.en}" onchange="APP.items[${idx}].en=this.value; APP.saveLocal()">
+                    <input value="${i.price}" onchange="APP.items[${idx}].price=this.value; APP.saveLocal()" type="number">
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn" style="background:#555; color:#fff;" onclick="APP.items[${idx}].hide=!APP.items[${idx}].hide; APP.renderAdmin()">${i.hide?'Unhide':'Hide'}</button>
+                        <button class="btn" style="background:red; color:#fff;" onclick="APP.items.splice(${idx},1); APP.renderAdmin()">Delete</button>
+                    </div>
+                    <input type="file" onchange="APP.updItemImg(${idx}, this)" style="border:none; font-size:12px; margin-top:10px;">
                 </div>`).join('');
             document.getElementById('niCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
         },
@@ -175,30 +190,31 @@
         setCat: function(id) { this.active = id; this.render(); },
         toggleLang: function() { this.lang = this.lang=='en'?'am':'en'; this.render(); },
         openLogin: function() { document.getElementById('u').value=''; document.getElementById('p').value=''; document.getElementById('logMod').style.display='flex'; },
-        login: function() { if(document.getElementById('u').value=='admin' && document.getElementById('p').value=='sgs'){ document.getElementById('adminDashboard').style.display='block'; this.closeMods(); } },
-        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; this.init(); },
+        login: function() { if(document.getElementById('u').value=='admin' && document.getElementById('p').value=='sgs'){ this.MASTER_LOCK = true; document.getElementById('adminDashboard').style.display='block'; this.closeMods(); this.render(); } },
+        closeAdmin: function() { this.MASTER_LOCK = false; document.getElementById('adminDashboard').style.display='none'; this.init(); },
         closeMods: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
         closeOnOutside: function(e) { if(e.target.className=='overlay') this.closeMods(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         pick: function(input) { const r = new FileReader(); r.onload = (e) => this.tmpImg = e.target.result; r.readAsDataURL(input.files[0]); },
-        updCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; this.save(); this.render(); }; r.readAsDataURL(input.files[0]); },
+        updCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; APP.saveLocal(); APP.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
+        updItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.items[idx].img = e.target.result; APP.saveLocal(); APP.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
         addCat: function() { 
-            const id = document.getElementById('ncId').value;
-            if(id) { this.cats.push({id, en: document.getElementById('ncEn').value, am: document.getElementById('ncAm').value, img: this.tmpImg}); this.tmpImg=''; this.save(); this.closeMods(); this.render(); }
+            const id = document.getElementById('ncId').value.trim().toLowerCase();
+            if(id) { this.cats.push({id, en: document.getElementById('ncEn').value, am: document.getElementById('ncAm').value, img: this.tmpImg}); this.tmpImg=''; this.saveLocal(); this.closeMods(); this.render(); }
         },
         addItem: function() {
             this.items.push({cat: document.getElementById('niCat').value, en: document.getElementById('niEn').value, am: document.getElementById('niAm').value, price: document.getElementById('niPr').value, img: this.tmpImg, hide: false});
-            this.tmpImg=''; this.save(); this.closeMods(); this.render();
+            this.tmpImg=''; this.saveLocal(); this.closeMods(); this.render();
         },
-        delCat: function(id) { if(confirm("Delete?")) { this.cats = this.cats.filter(c => c.id != id); this.save(); this.render(); } },
+        delCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.saveLocal(); this.render(); } },
         sync: async function() {
-            const b = document.getElementById('syncBtn'); b.innerText = "UPLOADING..."; b.disabled = true;
-            this.save();
+            const b = document.getElementById('syncBtn'); b.innerText = "UPLOADING TO LIVE MENU..."; b.disabled = true;
+            this.saveLocal();
             try {
                 await fetch(this.EP, { method: 'POST', mode: 'no-cors', body: JSON.stringify({items:this.items, cats:this.cats}) });
-                alert("Master Sync Complete!");
-            } catch(e) { alert("Sync Failed"); }
-            finally { b.innerText = "💾 SAVE & SYNC ALL CHANGES"; b.disabled = false; }
+                alert("Master Update Successful!");
+            } catch(e) { alert("Network Error. Please try again."); }
+            finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; }
         }
     };
     window.onload = () => APP.init();
