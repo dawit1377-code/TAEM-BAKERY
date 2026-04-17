@@ -6,31 +6,18 @@
     <title>TAEM BAKERY & PASTRY - MASTER PROFESSIONAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* BRAND SETTINGS */
         :root { --p-yellow: #FFEF00; --mocha: #3B270C; --bg: #ffffff; }
-
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        /* HEADER - FORCED ONE LINE */
         .header { background: var(--mocha); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
-        .header h1 { 
-            font-family: 'Playfair Display'; 
-            font-size: 24px; 
-            font-weight: 800; 
-            text-align: center; 
-            flex-grow: 1; 
-            white-space: nowrap;
-        }
+        .header h1 { font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; text-align: center; flex-grow: 1; white-space: nowrap; }
         
-        /* NAVIGATION */
         .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
         .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
         .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha); border-bottom-color: var(--p-yellow); }
         .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
-        .nav-item p { font-size: 16px; font-weight: 600; }
 
-        /* MENU CARDS */
         .container { padding: 15px; }
         .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
@@ -39,19 +26,16 @@
 
         .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--mocha); color: var(--p-yellow); padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-        /* ADMIN DASHBOARD - FULL MASTER VERSION */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
-        .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
+        .btn { padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; }
         
-        .cat-row { background: white; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
-        .cat-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        
+        .cat-row { background: white; padding: 12px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 12px 5px; border-bottom: 1px solid #eee; }
+        td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
         
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
-        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        .move-btn { background: #eee; color: #333; padding: 5px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; margin: 2px; cursor: pointer; }
+        input, select { width: 100%; padding: 10px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
         .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
@@ -83,26 +67,26 @@
     <div class="admin-section">
         <h4 id="adminSection1">1. Category Management</h4>
         <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:55px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:50px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
     </div>
 
     <div class="admin-section">
         <h4 id="adminSection2">2. Menu Items Management</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
+        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:15px; height:50px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
         <div style="overflow-x:auto;">
             <table><tbody id="adminItemBody"></tbody></table>
         </div>
     </div>
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; font-size:18px; position:sticky; bottom:10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);">💾 SYNC ALL CHANGES</button>
+    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:20px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; position:sticky; bottom:10px;">💾 SYNC ALL CHANGES</button>
 </div>
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>New Category</h3>
+    <h3 id="catModalTitle">New Category</h3>
     <input type="text" id="nCatId" placeholder="ID (e.g. cakes)">
     <input type="text" id="nCatEn" placeholder="English Name">
     <input type="text" id="nCatAm" placeholder="Amharic Name">
     <input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
+    <button id="catSubmitBtn" onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
@@ -117,28 +101,19 @@
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--mocha); margin-bottom:5px;">Admin Login</h2>
-    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
-    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha); color:var(--p-yellow); width:100%; margin-top:15px; height:50px;">LOGIN</button>
+    <h2 style="color:var(--mocha);">Admin Login</h2>
+    <input type="text" id="uIn" placeholder="Username">
+    <input type="password" id="pIn" placeholder="Password">
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha); color:var(--p-yellow); width:100%; margin-top:10px;">LOGIN</button>
 </div></div>
 
 <script>
     const APP = {
         URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
-        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '',
+        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editIdx: -1,
 
         init: async function() {
-            // LOAD LOCAL MEMORY (PERSISTENCE)
-            const local = localStorage.getItem('TAEM_PROFESSIONAL_DATA');
-            if(local) {
-                const p = JSON.parse(local);
-                this.data = p.data; this.cats = p.cats;
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
-                this.render();
-            }
-
-            // SYNC WITH CLOUD
+            // Priority 1: Fetch freshest Cloud data for multi-device sync
             try {
                 const r = await fetch(`${this.URL}?t=${Date.now()}`);
                 const j = await r.json();
@@ -146,30 +121,29 @@
                     this.data = j.items;
                     this.cats = j.cats;
                     this.saveLocal();
-                    if(!this.activeCat) this.activeCat = this.cats[0].id;
-                    this.render();
                 }
-            } catch(e) { console.log("Sync delay..."); }
+            } catch(e) { 
+                // Priority 2: Use local if offline
+                const local = localStorage.getItem('TAEM_SYNC_DATA');
+                if(local) {
+                    const p = JSON.parse(local);
+                    this.data = p.data; this.cats = p.cats;
+                }
+            }
+            if(this.cats.length > 0) this.activeCat = this.cats[0].id;
+            this.render();
         },
 
         saveLocal: function() {
-            localStorage.setItem('TAEM_PROFESSIONAL_DATA', JSON.stringify({data: this.data, cats: this.cats}));
+            localStorage.setItem('TAEM_SYNC_DATA', JSON.stringify({data: this.data, cats: this.cats}));
         },
 
         render: function() {
             const isEn = this.lang === 'en';
-            
-            // UI TEXTS
             document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
-            document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
             document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
             
-            // ADMIN UI TEXTS
-            document.getElementById('adminHeaderTitle').innerText = isEn ? "TAEM MANAGEMENT" : "የጣዕም አስተዳደር";
-            document.getElementById('adminSection1').innerText = isEn ? "1. Category Management" : "1. የምድብ አስተዳደር";
-            document.getElementById('adminSection2').innerText = isEn ? "2. Menu Items Management" : "2. የምግብ ዝርዝር አስተዳደር";
-
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
                     <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
@@ -180,11 +154,7 @@
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
                     <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <div>
-                        <div class="food-title">${isEn ? i.en : i.am}</div>
-                        <div style="font-size:13px; color:#666; font-style:italic;">${i.ing || ''}</div>
-                        <div class="price-tag">${i.price} ETB</div>
-                    </div>
+                    <div><div class="food-title">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
                 </div>`).join('');
             this.renderAdmin();
         },
@@ -192,58 +162,71 @@
         renderAdmin: function() {
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
                 <div class="cat-row">
-                    <div class="cat-info">
-                        <span><b>${c.en}</b> / ${c.am}</span>
-                        <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:6px;">Del</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><b>${c.en}</b></span>
+                        <div>
+                            <button onclick="APP.editCat(${idx})" style="background:#2980b9; color:white; border:none; padding:5px 10px; border-radius:4px; margin-right:5px;">Edit</button>
+                            <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:4px;">Del</button>
+                        </div>
                     </div>
-                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="font-size:11px; border:none;">
                 </div>`).join('');
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td style="width:55%">
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="EN Name">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="AM Name">
-                        <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" placeholder="Ingredients" style="font-size:11px;">
-                    </td>
-                    <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
                     <td>
-                        <button onclick="APP.toggleHide(${idx})" style="width:100%; margin-bottom:5px;">${i.hidden?'Show':'Hide'}</button>
-                        <button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none; width:100%;">Del</button>
+                        <button class="move-btn" onclick="APP.move(${idx}, -1)">▲</button><br>
+                        <button class="move-btn" onclick="APP.move(${idx}, 1)">▼</button>
                     </td>
+                    <td style="width:50%"><input value="${i.en}" onchange="APP.data[${idx}].en=this.value"><input value="${i.am}" onchange="APP.data[${idx}].am=this.value"></td>
+                    <td><input type="number" value="${i.price}" onchange="APP.data[${idx}].price=this.value" style="width:70px"></td>
+                    <td><button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button><button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none; display:block; margin-top:5px;">Del</button></td>
                 </tr>`).join('');
             document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
+        },
+
+        move: function(idx, dir) {
+            let target = idx + dir;
+            if(target < 0 || target >= this.data.length) return;
+            [this.data[idx], this.data[target]] = [this.data[target], this.data[idx]];
+            this.render();
+        },
+
+        editCat: function(idx) {
+            this.editIdx = idx;
+            const c = this.cats[idx];
+            document.getElementById('catModalTitle').innerText = "Edit Category";
+            document.getElementById('nCatId').value = c.id;
+            document.getElementById('nCatEn').value = c.en;
+            document.getElementById('nCatAm').value = c.am;
+            document.getElementById('catSubmitBtn').innerText = "UPDATE";
+            this.openModal('catModal');
+        },
+
+        createNewCat: function() {
+            const id = document.getElementById('nCatId').value.trim();
+            const payload = { id, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp || (this.editIdx > -1 ? this.cats[this.editIdx].img : '') };
+            if(this.editIdx > -1) this.cats[this.editIdx] = payload;
+            else this.cats.push(payload);
+            this.editIdx = -1; this.imgTmp = ''; this.saveLocal(); this.closeModals(); this.render();
         },
 
         setCat: function(id) { this.activeCat = id; this.render(); },
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
-        verifyLogin: function() { 
-            // CREDENTIALS ARE NEVER SAVED TO LOCALSTORAGE
-            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
-                document.getElementById('adminDashboard').style.display='block'; 
-                document.getElementById('uIn').value=''; document.getElementById('pIn').value='';
-                this.closeModals(); 
-            } else { alert("Login Failed"); }
-        },
+        verifyLogin: function() { if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ document.getElementById('adminDashboard').style.display='block'; this.closeModals(); } },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
-        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
+        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.editIdx = -1; document.getElementById('catModalTitle').innerText = "New Category"; document.getElementById('catSubmitBtn').innerText = "CREATE"; },
         closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        updateCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; this.saveLocal(); this.render(); }; r.readAsDataURL(input.files[0]); },
         
-        createNewCat: function() { 
-            const id = document.getElementById('nCatId').value.trim().toLowerCase(); 
-            if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.saveLocal(); this.closeModals(); this.render(); } 
-        },
         createNewItem: function() {
             this.data.push({ cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false });
             this.saveLocal(); this.closeModals(); this.render();
         },
-        toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.saveLocal(); this.render(); },
-        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.saveLocal(); this.render(); } },
-        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.saveLocal(); this.render(); } },
+        toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
+        deleteCat: function(id) { if(confirm("Delete?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
+        deleteItem: function(idx) { if(confirm("Delete?")) { this.data.splice(idx, 1); this.render(); } },
 
         saveToCloud: async function() {
             const b = document.getElementById('cloudBtn');
@@ -251,8 +234,8 @@
             this.saveLocal();
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
-                alert("Cloud Sync Successful!");
-            } catch(e) { alert("Sync Error - Data saved locally."); }
+                alert("Updated successfully on all devices!");
+            } catch(e) { alert("Network Error"); }
             finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
         }
     };
