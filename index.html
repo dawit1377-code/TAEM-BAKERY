@@ -3,60 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - Professional Menu</title>
+    <title>TAEM BAKERY & PASTRY - Mocha Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* BRAND SETTINGS - TAEM BAKERY & PASTRY (WHITE THEME) */
+        /* BRAND SETTINGS - TAEM BAKERY & PASTRY (MOCHA & CANARY) */
         :root { 
-            --p-yellow: #FFD700;   /* Gold/Yellow for Name */
-            --p-red: #D32F2F;      /* Red for Labels */
-            --bg-white: #FFFFFF;    
-            --dark-text: #2D2D2D;
+            --mocha-bg: #3B270C;    /* Mocha Background */
+            --canary-yellow: #FFEF00; /* Canary Yellow for Name */
+            --p-red: #D32F2F;        /* Red for Action Labels */
+            --p-white: #FFFFFF;    
+            --card-bg: #FFFFFF;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg-white); color: var(--dark-text); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
+        body { background: var(--mocha-bg); color: var(--p-white); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        /* HEADER - White Theme */
-        .header { background: var(--bg-white); color: var(--p-yellow); padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; height: 145px; border-bottom: 2px solid #f0f0f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .menu-toggle { position: absolute; left: 15px; top: 20px; font-size: 28px; cursor: pointer; color: var(--dark-text); }
-        .lang-toggle { position: absolute; right: 15px; top: 20px; background: var(--p-red); color: white; border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; font-size: 11px; }
+        /* HEADER - Mocha & Canary Theme */
+        .header { background: var(--mocha-bg); color: var(--canary-yellow); padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; height: 155px; border-bottom: 1px solid rgba(255,239,0,0.2); }
+        .menu-toggle { position: absolute; left: 15px; top: 20px; font-size: 28px; cursor: pointer; color: var(--canary-yellow); }
+        .lang-toggle { position: absolute; right: 15px; top: 20px; background: var(--canary-yellow); color: var(--mocha-bg); border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; font-size: 11px; }
         
-        .header h1 { font-family: 'Playfair Display'; font-size: 28px; font-weight: 900; text-align: center; text-transform: uppercase; line-height: 1.1; margin-top: 10px; text-shadow: 1px 1px 1px rgba(0,0,0,0.1); }
-        .sub-labels { text-align: center; width: 100%; }
-        .sub-labels #subTitle { color: var(--p-red); font-size: 14px; font-weight: 800; letter-spacing: 4px; margin-top: 5px; }
-        .sub-labels #vatNote { color: var(--p-red); font-size: 11px; font-weight: 600; margin-top: 2px; }
+        .header h1 { font-family: 'Playfair Display'; font-size: 28px; font-weight: 900; text-align: center; text-transform: uppercase; line-height: 1.1; margin-top: 15px; }
+        .sub-labels { text-align: center; width: 100%; margin-top: 5px; }
+        .sub-labels #subTitle { color: var(--p-white); font-size: 14px; font-weight: 800; letter-spacing: 4px; opacity: 0.9; }
+        .sub-labels #vatNote { color: var(--canary-yellow); font-size: 11px; font-weight: 600; margin-top: 2px; opacity: 0.8; }
         
         /* NAVIGATION */
-        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 145px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
-        .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
-        .nav-item.active { opacity: 1; font-weight: bold; color: var(--p-red); border-bottom-color: var(--p-red); }
-        .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid var(--p-yellow); margin-bottom: 8px; }
+        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 155px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
+        .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; color: #333; }
+        .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha-bg); border-bottom-color: var(--mocha-bg); }
+        .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid var(--canary-yellow); margin-bottom: 8px; }
         .nav-item p { font-size: 16px; font-weight: 600; }
 
         /* MENU CARDS */
         .container { padding: 15px; }
-        .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card { display: flex; align-items: center; background: var(--card-bg); border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.2); color: #333; }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; border: 1px solid #eee; }
-        .food-title { color: var(--p-red); font-size: 20px; font-weight: 600; }
+        .food-title { color: var(--mocha-bg); font-size: 20px; font-weight: 600; }
         .food-ing { font-size: 14px; color: #666; font-style: italic; }
-        .price-tag { font-weight: bold; color: #333; margin-top: 5px; font-size: 19px; background: var(--p-yellow); display: inline-block; padding: 2px 10px; border-radius: 4px; }
+        .price-tag { font-weight: bold; color: var(--mocha-bg); margin-top: 5px; font-size: 19px; background: var(--canary-yellow); display: inline-block; padding: 2px 10px; border-radius: 4px; }
 
-        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--p-red); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--canary-yellow); color: var(--mocha-bg); padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: 2px solid var(--mocha-bg); }
 
         /* ADMIN DASHBOARD */
-        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
+        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; color: #333; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
         
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 5px; border-bottom: 1px solid #eee; }
         
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-red) !important; color: var(--p-red); }
+        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha-bg) !important; color: var(--mocha-bg); }
         input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
-        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
+        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; color: #333; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)">
@@ -79,9 +80,9 @@
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Order Now</span></a>
 
 <div id="adminDashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--dark-text); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha-bg); padding:20px; color:var(--canary-yellow); border-radius:12px; margin-bottom: 20px;">
         <h3 style="margin:0">TAEM MANAGER</h3>
-        <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
+        <button onclick="APP.closeAdmin()" style="color:var(--canary-yellow); border:none; background:none; font-size:40px;">&times;</button>
     </div>
     
     <div class="admin-section">
@@ -128,10 +129,10 @@
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--dark-text); margin-bottom:5px;">Manager Login</h2>
+    <h2 style="color:var(--mocha-bg); margin-bottom:5px;">Manager Login</h2>
     <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
     <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--p-red); color:white; width:100%; margin-top:15px; height:50px;">LOGIN</button>
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha-bg); color:var(--canary-yellow); width:100%; margin-top:15px; height:50px;">LOGIN</button>
 </div></div>
 
 <script>
