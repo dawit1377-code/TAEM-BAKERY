@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - Persistent Master</title>
+    <title>TAEM BAKERY & PASTRY - SGS Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -24,14 +24,14 @@
         .sub-labels #subTitle { color: var(--p-white); font-size: 15px; font-weight: 800; letter-spacing: 5px; text-align: center; }
         .sub-labels #vatNote { color: var(--canary-yellow); font-size: 12px; text-align: center; font-weight: 600; opacity: 0.9; }
         
-        /* NAVIGATION */
+        /* NAVIGATION - ENLARGED */
         .nav-bar { display: flex; overflow-x: auto; padding: 20px 10px; background: #fff; position: sticky; top: 160px; z-index: 900; min-height: 220px; scrollbar-width: none; border-bottom: 1px solid #ddd; }
         .nav-item { text-align: center; min-width: 160px; opacity: 0.4; transition: 0.3s; color: #333; }
         .nav-item.active { opacity: 1; transform: scale(1.05); }
         .nav-item img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--canary-yellow); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         .nav-item p { font-weight: bold; margin-top: 8px; font-size: 17px; }
 
-        /* MENU CARDS */
+        /* MENU CARDS - ENLARGED */
         .container { padding: 15px; }
         .card { display: flex; align-items: center; background: white; border-radius: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #eee; box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
         .food-img { width: 135px; height: 135px; border-radius: 12px; object-fit: cover; border: 4px solid var(--canary-yellow); margin-right: 18px; }
@@ -42,7 +42,7 @@
 
         .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary-yellow); color: var(--mocha-bg); padding: 18px 45px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: 900; font-size: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); border: 2px solid var(--mocha-bg); }
 
-        /* ADMIN */
+        /* ADMIN DASHBOARD */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; color: #333; }
         .admin-section { border: 2px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 25px; background: #fdfdfd; }
         .btn { padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; width: 100%; }
@@ -98,7 +98,7 @@
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
     <h3>New Category</h3>
-    <input type="text" id="nCatId" placeholder="Unique ID (e.g. donuts)">
+    <input type="text" id="nCatId" placeholder="Unique ID (e.g. cookies)">
     <input type="text" id="nCatEn" placeholder="Name (English)">
     <input type="text" id="nCatAm" placeholder="Name (Amharic)">
     <input type="file" onchange="APP.handleImg(this)">
@@ -118,28 +118,26 @@
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
     <h2 style="color:var(--mocha-bg); margin-bottom:15px;">Admin Login</h2>
-    <input type="text" id="uIn" placeholder="Username" value="" style="text-align:center;">
-    <input type="password" id="pIn" placeholder="Password" value="" style="text-align:center;">
+    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
+    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
     <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha-bg); color:var(--canary-yellow); height:60px; margin-top:15px;">LOGIN</button>
 </div></div>
 
 <script>
     const APP = {
         URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
-        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null,
+        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null, isSaving: false,
 
         init: async function() {
+            if(this.isSaving) return; // Don't pull while user is editing
             try {
                 const r = await fetch(`${this.URL}?cb=${Date.now()}`);
                 const j = await r.json();
-                // ONLY UPDATE IF NOT IN MIDDLE OF LOCAL EDIT
-                if(!document.getElementById('adminDashboard').style.display || document.getElementById('adminDashboard').style.display === 'none') {
-                    this.data = j.items || [];
-                    this.cats = j.cats || [];
-                    if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
-                    this.render();
-                }
-            } catch(e) { console.log("Cloud pull deferred..."); }
+                this.data = j.items || [];
+                this.cats = j.cats || [];
+                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+                this.render();
+            } catch(e) { console.error("Cloud Error"); }
         },
 
         render: function() {
@@ -178,7 +176,6 @@
                             <button onclick="APP.deleteCat('${c.id}')" style="background:red; color:white; border:none; padding:8px 12px; border-radius:5px;">Del</button>
                         </div>
                     </div>
-                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="margin-top:10px; border:none; font-size:12px;">
                 </div>`).join('');
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
@@ -205,22 +202,19 @@
         verifyLogin: function() { 
             if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
                 document.getElementById('adminDashboard').style.display='block'; this.closeModals(); this.render();
-            } else { alert("Invalid Credentials"); }
+            } else { alert("Error"); }
         },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; this.init(); },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        updateCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
         updateItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.data[idx].img = e.target.result; this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
         prepRename: function(id) { this.editId = id; const c = this.cats.find(x => x.id == id); document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); },
         applyCatRename: function() { 
-            const newEn = document.getElementById('eCatEn').value;
-            const newAm = document.getElementById('eCatAm').value;
-            this.cats = this.cats.map(c => c.id === this.editId ? {...c, en: newEn, am: newAm} : c);
+            this.cats = this.cats.map(c => c.id === this.editId ? {...c, en: document.getElementById('eCatEn').value, am: document.getElementById('eCatAm').value} : c);
             this.closeModals(); this.render();
         },
-        deleteCat: function(id) { if(confirm("Delete category?")) { this.cats = this.cats.filter(c => c.id != id); this.data = this.data.filter(i => i.cat != id); this.render(); } },
+        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
         createNewCat: function() { 
             const id = document.getElementById('nCatId').value.trim().toLowerCase(); 
             if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.imgTmp=""; this.closeModals(); this.render(); } 
@@ -230,14 +224,15 @@
             this.imgTmp=""; this.closeModals(); this.render(); 
         },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.renderAdmin(); },
-        deleteItem: function(idx) { if(confirm("Delete?")) { this.data.splice(idx, 1); this.renderAdmin(); } },
+        deleteItem: function(idx) { if(confirm("Delete item?")) { this.data.splice(idx, 1); this.renderAdmin(); } },
         saveToCloud: async function() {
+            this.isSaving = true;
             const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Live Menu Updated Successfully!");
-            } catch(e) { alert("Network Error. Try again."); }
-            finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; }
+                alert("Saved to LIVE Menu!");
+            } catch(e) { alert("Save Failed"); }
+            finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; this.isSaving = false; }
         }
     };
     window.onload = () => APP.init();
