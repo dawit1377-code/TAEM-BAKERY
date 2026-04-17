@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TAEM BAKERY & PASTRY - Professional Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* BRAND SETTINGS - TAEM BAKERY & PASTRY */
+        :root { 
+            --p-yellow: #FFD700;   /* Gold/Yellow from Logo */
+            --p-red: #D32F2F;      /* Brand Red */
+            --p-white: #FFFFFF;    /* Clean Background */
+            --dark-text: #2D2D2D;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--p-white); color: var(--dark-text); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
+        
+        /* HEADER */
+        .header { background: var(--p-red); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 140px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .header h1 { font-family: 'Playfair Display'; font-size: 28px; font-weight: 800; text-align: center; flex-grow: 1; text-transform: uppercase; line-height: 1.1; }
+        
+        /* NAVIGATION */
+        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 140px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
+        .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
+        .nav-item.active { opacity: 1; font-weight: bold; color: var(--p-red); border-bottom-color: var(--p-red); }
+        .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid var(--p-yellow); margin-bottom: 8px; }
+        .nav-item p { font-size: 16px; font-weight: 600; }
+
+        /* MENU CARDS */
+        .container { padding: 15px; }
+        .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; border: 1px solid #eee; }
+        .food-title { color: var(--p-red); font-size: 20px; font-weight: 600; }
+        .food-ing { font-size: 14px; color: #666; font-style: italic; }
+        .price-tag { font-weight: bold; color: #333; margin-top: 5px; font-size: 19px; background: var(--p-yellow); display: inline-block; padding: 2px 10px; border-radius: 4px; }
+
+        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--p-red); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid var(--p-yellow); }
+
+        /* ADMIN DASHBOARD */
+        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
+        .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
+        .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 12px 5px; border-bottom: 1px solid #eee; }
+        
+        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-red) !important; color: var(--p-red); }
+        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
+        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
+    </style>
+</head>
+<body onclick="APP.closeOnOutside(event)">
+
+<header class="header">
+    <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
+    <div style="text-align:center;">
+        <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
+        <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px; color:white;">MENU</div>
+        <div id="vatNote" style="font-size:10px; opacity:0.9; margin-top:4px; color:white;">All prices include VAT</div>
+    </div>
+    <button onclick="APP.toggleLang()" style="background:var(--p-yellow); color:var(--p-red); border:none; padding:10px 15px; border-radius:20px; font-weight:bold; font-size:12px;">EN/አማ</button>
+</header>
+
+<nav class="nav-bar" id="categoryNav"></nav>
+<div class="container" id="menuListing"></div>
+
+<a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Order Now</span></a>
+
+<div id="adminDashboard">
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--p-red); padding:20px; color:white; border-radius:12px; margin-bottom: 20px;">
+        <h3 style="margin:0">TAEM MANAGER</h3>
+        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px;">&times;</button>
+    </div>
+    
+    <div class="admin-section">
+        <h4>1. Category Management</h4>
+        <div id="adminCatList"></div>
+        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:55px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+    </div>
+
+    <div class="admin-section">
+        <h4>2. Menu Items Management</h4>
+        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW BAKERY ITEM</button>
+        <div style="overflow-x:auto;">
+            <table><tbody id="adminItemBody"></tbody></table>
+        </div>
+    </div>
+    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; font-size:18px; position:sticky; bottom:10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);">💾 SYNC ALL UPDATES</button>
+</div>
+
+<div id="editCatModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h3>Rename Category</h3>
+    <input type="text" id="eCatEn" placeholder="English Name">
+    <input type="text" id="eCatAm" placeholder="Amharic Name">
+    <button onclick="APP.applyCatRename()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">SAVE RENAME</button>
+</div></div>
+
+<div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h3>New Category</h3>
+    <input type="text" id="nCatId" placeholder="ID (e.g. cakes)">
+    <input type="text" id="nCatEn" placeholder="English Name">
+    <input type="text" id="nCatAm" placeholder="Amharic Name">
+    <input type="file" onchange="APP.handleImg(this)">
+    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
+</div></div>
+
+<div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h3>Add Bakery Item</h3>
+    <select id="nItemCat"></select>
+    <input type="text" id="nItemEn" placeholder="Name (English)">
+    <input type="text" id="nItemAm" placeholder="Name (Amharic)">
+    <input type="text" id="nItemIng" placeholder="Ingredients">
+    <input type="number" id="nItemPrice" placeholder="Price">
+    <input type="file" onchange="APP.handleImg(this)">
+    <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD TO MENU</button>
+</div></div>
+
+<div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
+    <h2 style="color:var(--p-red); margin-bottom:5px;">Welcome To TAEM Bakery</h2>
+    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
+    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--p-red); width:100%; margin-top:15px; height:50px;">LOGIN</button>
+</div></div>
+
+<script>
+    const APP = {
+        URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
+        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null,
+
+        init: async function() {
+            try {
+                const r = await fetch(`${this.URL}?t=${Date.now()}`);
+                const j = await r.json();
+                this.data = j.items || [];
+                this.cats = j.cats || [];
+                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+                this.render();
+            } catch(e) { console.error("Sync Error"); }
+        },
+
+        render: function() {
+            const isEn = this.lang === 'en';
+            document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
+            document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
+            document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
+            document.getElementById('callBtnText').innerText = isEn ? "Order Now" : "አሁኑኑ እዘዙ";
+
+            document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
+                <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
+                    <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
+                    <p>${isEn ? c.en : c.am}</p>
+                </div>`).join('');
+
+            const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
+            document.getElementById('menuListing').innerHTML = filtered.map(i => `
+                <div class="card">
+                    <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
+                    <div>
+                        <div class="food-title">${isEn ? i.en : i.am}</div>
+                        <div class="food-ing">${i.ing || ''}</div>
+                        <div class="price-tag">${i.price} ETB</div>
+                    </div>
+                </div>`).join('');
+            this.renderAdmin();
+        },
+
+        renderAdmin: function() {
+            document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
+                <div style="background:white; padding:15px; border:1px solid #eee; margin-bottom:10px; border-radius:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><b>${c.en}</b> / ${c.am}</span>
+                        <div>
+                            <button onclick="APP.prepRename('${c.id}')" style="background:#3498db; color:white; border:none; padding:8px 12px; border-radius:6px;">Edit</button>
+                            <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:6px; margin-left:5px;">Del</button>
+                        </div>
+                    </div>
+                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="font-size:11px; margin-top:10px;">
+                </div>`).join('');
+
+            document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
+                <tr style="${i.hidden ? 'opacity:0.3' : ''}">
+                    <td style="width:55%">
+                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" style="font-weight:bold; height:35px;">
+                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" style="height:35px;">
+                        <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" style="font-size:11px; height:35px;">
+                        <select onchange="APP.data[${idx}].cat=this.value" style="font-size:11px; height:35px; color:blue;">
+                            ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>Move to: ${c.en}</option>`).join('')}
+                        </select>
+                        <input type="file" onchange="APP.updateItemImg(${idx}, this)" style="font-size:10px; border:none;">
+                    </td>
+                    <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
+                    <td style="text-align:right">
+                        <button onclick="APP.toggleHide(${idx})" style="background:#555; color:white; border:none; padding:8px; width:100%; margin-bottom:5px;">${i.hidden?'Show':'Hide'}</button>
+                        <button onclick="APP.deleteItem(${idx})" style="background:red; color:white; border:none; padding:8px; width:100%;">Del</button>
+                    </td>
+                </tr>`).join('');
+            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
+        },
+
+        setCat: function(id) { this.activeCat = id; this.render(); },
+        toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
+        showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
+        closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex') this.closeModals(); },
+        verifyLogin: function() { 
+            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
+                document.getElementById('adminDashboard').style.display='block'; 
+                this.closeModals(); 
+            } else { alert("Login Failed"); }
+        },
+        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
+        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.imgTmp = ''; },
+        openModal: function(id) { document.getElementById(id).style.display='flex'; },
+        handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
+        updateCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => this.cats[idx].img = e.target.result; r.readAsDataURL(input.files[0]); },
+        updateItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.data[idx].img = e.target.result; this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
+        prepRename: function(id) { this.editId = id; const c = this.cats.find(x => x.id == id); document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); },
+        applyCatRename: function() { const c = this.cats.find(x => x.id == this.editId); if(c){ c.en=document.getElementById('eCatEn').value; c.am=document.getElementById('eCatAm').value; this.closeModals(); this.render(); } },
+        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
+        createNewCat: function() { const id = document.getElementById('nCatId').value.trim().toLowerCase(); if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.closeModals(); this.render(); } },
+        createNewItem: function() { this.data.push({ id: Date.now(), cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false }); this.closeModals(); this.render(); },
+        toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
+        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.render(); } },
+        saveToCloud: async function() {
+            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
+            try {
+                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
+                alert("TAEM Bakery Sync Successful!"); this.init();
+            } catch(e) { alert("Sync Error"); }
+            finally { b.innerText = "💾 SYNC ALL UPDATES"; b.disabled = false; }
+        }
+    };
+    window.onload = () => APP.init();
+</script>
+</body>
+</html>
