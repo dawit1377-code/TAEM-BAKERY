@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY Menu - MASTER PROFESSIONAL</title>
+    <title>TAEM BAKERY & PASTRY - MASTER PROFESSIONAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* BRAND SETTINGS */
-        :root { --p-green: #4F7942; --dark-green: #3E5F34; --bg: #ffffff; }
+        /* BRAND SETTINGS - MOCHA & CANARY YELLOW */
+        :root { --p-yellow: #FFEF00; --mocha: #3B270C; --bg: #ffffff; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
         /* HEADER */
-        .header { background: var(--dark-green); color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 32px; font-weight: 800; text-align: center; flex-grow: 1; }
+        .header { background: var(--mocha); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
+        .header h1 { font-family: 'Playfair Display'; font-size: 26px; font-weight: 800; text-align: center; flex-grow: 1; white-space: nowrap; }
         
-        /* NAVIGATION - 125px icons */
+        /* NAVIGATION */
         .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
         .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
-        .nav-item.active { opacity: 1; font-weight: bold; color: var(--p-green); border-bottom-color: var(--p-green); }
+        .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha); border-bottom-color: var(--p-yellow); }
         .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
         .nav-item p { font-size: 16px; font-weight: 600; }
 
-        /* MENU CARDS - 125px food images */
+        /* MENU CARDS */
         .container { padding: 15px; }
         .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
-        .food-title { color: var(--p-green); font-size: 20px; font-weight: 600; }
+        .food-title { color: var(--mocha); font-size: 20px; font-weight: 600; }
         .food-ing { font-size: 14px; color: #777; font-style: italic; }
-        .price-tag { font-weight: bold; color: var(--dark-green); margin-top: 5px; font-size: 18px; }
+        .price-tag { font-weight: bold; color: var(--mocha); margin-top: 5px; font-size: 18px; background: var(--p-yellow); display: inline-block; padding: 2px 8px; border-radius: 4px; }
 
-        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--mocha); color: var(--p-yellow); padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
         /* ADMIN DASHBOARD */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
@@ -44,7 +44,7 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 5px; border-bottom: 1px solid #eee; }
         
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
+        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
         input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
@@ -56,11 +56,11 @@
 <header class="header">
     <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
     <div style="text-align:center;">
-        <h1 id="mainTitle">SGS HOTEL</h1>
+        <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
         <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px;">MENU</div>
         <div id="vatNote" style="font-size:10px; opacity:0.8; margin-top:4px;">All prices include VAT</div>
     </div>
-    <button onclick="APP.toggleLang()" style="background:white; color:var(--dark-green); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
+    <button onclick="APP.toggleLang()" style="background:var(--p-yellow); color:var(--mocha); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
 </header>
 
 <nav class="nav-bar" id="categoryNav"></nav>
@@ -69,9 +69,9 @@
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--dark-green); padding:20px; color:white; border-radius:12px; margin-bottom: 20px;">
-        <h3 style="margin:0">SGS MANAGER</h3>
-        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px;">&times;</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
+        <h3 style="margin:0">MANAGEMENT</h3>
+        <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
     </div>
     
     <div class="admin-section">
@@ -118,10 +118,10 @@
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--dark-green); margin-bottom:5px;">Welcome To SGS Hotel</h2>
+    <h2 style="color:var(--mocha); margin-bottom:5px;">Admin Login</h2>
     <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
     <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--dark-green); width:100%; margin-top:15px; height:50px;">LOGIN</button>
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha); color:var(--p-yellow); width:100%; margin-top:15px; height:50px;">LOGIN</button>
 </div></div>
 
 <script>
@@ -142,8 +142,7 @@
 
         render: function() {
             const isEn = this.lang === 'en';
-            // Header Translation Fix
-            document.getElementById('mainTitle').innerText = isEn ? "SGS HOTEL" : "ኤስ.ጂ.ኤስ ሆቴል";
+            document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
             document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
             document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
@@ -177,7 +176,7 @@
                             <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:6px; margin-left:5px;">Del</button>
                         </div>
                     </div>
-                    <label style="font-size:11px; color:#666;">Update Cat Photo:</label>
+                    <label style="font-size:11px; color:#666;">Update Photo:</label>
                     <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="font-size:11px;">
                 </div>`).join('');
 
@@ -220,7 +219,7 @@
         
         updateCatImg: function(idx, input) {
             const r = new FileReader();
-            r.onload = (e) => { this.cats[idx].img = e.target.result; alert("Category image updated. Click Sync to save."); };
+            r.onload = (e) => { this.cats[idx].img = e.target.result; this.renderAdmin(); };
             r.readAsDataURL(input.files[0]);
         },
 
@@ -247,7 +246,7 @@
             b.innerText = "UPDATING..."; b.disabled = true;
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Master Version Updated!"); this.init();
+                alert("Master Updated Successfully!"); this.init();
             } catch(e) { alert("Sync Failed"); }
             finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
         }
