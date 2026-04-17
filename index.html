@@ -3,178 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - SGS Master Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    <title>TAEM BAKERY - SGS Professional Release</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@400;600;800&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --mocha-bg: #3B270C;    
-            --canary-yellow: #FFEF00; 
-            --p-white: #FFFFFF;    
-        }
-
+        :root { --mocha: #3B270C; --canary: #FFEF00; --white: #FFFFFF; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--mocha-bg); color: var(--p-white); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 120px; overflow-x: hidden; }
+        body { background: var(--mocha); color: var(--white); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
         /* HEADER */
-        .header { background: var(--mocha-bg); color: var(--canary-yellow); padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; height: 160px; border-bottom: 2px solid var(--canary-yellow); }
-        .menu-toggle { position: absolute; left: 15px; top: 20px; font-size: 32px; cursor: pointer; }
-        .lang-toggle { position: absolute; right: 15px; top: 20px; background: var(--canary-yellow); color: var(--mocha-bg); border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; }
-        
-        .header h1 { font-family: 'Playfair Display'; font-size: 30px; font-weight: 900; text-align: center; text-transform: uppercase; line-height: 1.1; margin-top: 20px; }
-        .sub-labels #subTitle { color: var(--p-white); font-size: 15px; font-weight: 800; letter-spacing: 5px; text-align: center; }
-        .sub-labels #vatNote { color: var(--canary-yellow); font-size: 12px; text-align: center; font-weight: 600; opacity: 0.9; }
-        
-        /* NAVIGATION */
-        .nav-bar { display: flex; overflow-x: auto; padding: 20px 10px; background: #fff; position: sticky; top: 160px; z-index: 900; min-height: 220px; scrollbar-width: none; border-bottom: 1px solid #ddd; }
+        .header { background: var(--mocha); height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--canary); }
+        .menu-toggle { position: absolute; left: 15px; top: 25px; font-size: 30px; color: var(--canary); cursor: pointer; }
+        .lang-btn { position: absolute; right: 15px; top: 25px; background: var(--canary); color: var(--mocha); border: none; padding: 8px 15px; border-radius: 20px; font-weight: 800; }
+        .header h1 { font-family: 'Playfair Display'; font-size: 28px; color: var(--canary); text-transform: uppercase; }
+        .sub-labels { text-align: center; }
+        #subTitle { font-weight: 800; letter-spacing: 4px; font-size: 14px; }
+        #vatNote { font-size: 11px; color: var(--canary); }
+
+        /* NAV & CARDS */
+        .nav-bar { display: flex; overflow-x: auto; padding: 20px 10px; background: #fff; position: sticky; top: 160px; z-index: 900; border-bottom: 1px solid #ddd; }
         .nav-item { text-align: center; min-width: 160px; opacity: 0.4; transition: 0.3s; color: #333; }
         .nav-item.active { opacity: 1; transform: scale(1.05); }
-        .nav-item img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--canary-yellow); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        .nav-item p { font-weight: bold; margin-top: 8px; font-size: 17px; }
-
-        /* MENU CARDS */
-        .container { padding: 15px; }
-        .card { display: flex; align-items: center; background: white; border-radius: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #eee; box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
-        .food-img { width: 135px; height: 135px; border-radius: 12px; object-fit: cover; border: 4px solid var(--canary-yellow); margin-right: 18px; }
-        .food-info { flex: 1; }
-        .food-title { color: var(--mocha-bg); font-size: 22px; font-weight: 700; line-height: 1.2; }
-        .food-ing { font-size: 14px; color: #666; margin: 4px 0; }
-        .price-tag { font-weight: 800; color: var(--mocha-bg); font-size: 21px; background: var(--canary-yellow); padding: 4px 12px; border-radius: 6px; display: inline-block; }
-
-        .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary-yellow); color: var(--mocha-bg); padding: 18px 45px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: 900; font-size: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); border: 2px solid var(--mocha-bg); }
-
-        /* ADMIN */
-        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; color: #333; }
-        .admin-section { border: 2px solid #eee; padding: 15px; border-radius: 12px; margin-bottom: 25px; background: #fdfdfd; }
-        .btn { padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; width: 100%; }
-        input, select { width: 100%; padding: 14px; margin: 6px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; background: #fff; }
+        .nav-item img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid var(--canary); }
         
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:4000; align-items:center; justify-content:center; }
-        .modal { background:white; padding:25px; border-radius:20px; width:90%; max-width:450px; }
+        .container { padding: 15px; }
+        .card { display: flex; align-items: center; background: white; border-radius: 15px; margin-bottom: 15px; padding: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .food-img { width: 135px; height: 135px; border-radius: 10px; object-fit: cover; border: 3px solid var(--canary); margin-right: 15px; }
+        .food-info { flex: 1; color: var(--mocha); }
+        .food-title { font-size: 20px; font-weight: 800; }
+        .price-tag { background: var(--canary); padding: 3px 10px; border-radius: 5px; font-weight: 900; display: inline-block; margin-top: 5px; }
+
+        .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--canary); color: var(--mocha); padding: 15px 40px; border-radius: 50px; font-weight: 900; text-decoration: none; z-index: 2000; border: 2px solid var(--mocha); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+
+        /* ADMIN & MODALS */
+        #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y:auto; color:#333; }
+        .admin-card { background:#f9f9f9; border:1px solid #ddd; padding:15px; border-radius:10px; margin-bottom:15px; }
+        input, select { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 8px; }
+        .btn { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:4000; align-items:center; justify-content:center; }
+        .modal { background:#fff; padding:20px; border-radius:15px; width:90%; max-width:400px; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)">
 
 <header class="header">
-    <div onclick="APP.showLogin(event)" class="menu-toggle">☰</div>
+    <div onclick="APP.openLogin()" class="menu-toggle">☰</div>
     <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
     <div class="sub-labels">
         <div id="subTitle">MENU</div>
         <div id="vatNote">All prices include VAT</div>
     </div>
-    <button onclick="APP.toggleLang()" class="lang-toggle">EN/አማ</button>
+    <button onclick="APP.toggleLang()" class="lang-btn">EN/አማ</button>
 </header>
 
 <nav class="nav-bar" id="categoryNav"></nav>
 <div class="container" id="menuListing"></div>
-
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha-bg); padding:20px; color:var(--canary-yellow); border-radius:15px; margin-bottom:20px;">
-        <h2 style="margin:0">MANAGEMENT</h2>
-        <button onclick="APP.closeAdmin()" style="color:var(--canary-yellow); border:none; background:none; font-size:45px;">&times;</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2>MASTER ADMIN</h2>
+        <button onclick="APP.closeAdmin()" style="font-size:30px; border:none; background:none;">&times;</button>
     </div>
     
-    <div class="admin-section">
-        <h3>1. Categories</h3>
-        <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; margin-top:15px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+    <div class="admin-card">
+        <h3>Categories</h3>
+        <div id="admCats"></div>
+        <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.openModal('catMod')">+ New Category</button>
     </div>
 
-    <div class="admin-section">
-        <h3>2. Menu Items</h3>
-        <button class="btn" style="background:#27ae60; margin-bottom:20px;" onclick="APP.openModal('itemModal')">+ ADD NEW ITEM</button>
-        <div id="adminItemBody"></div>
+    <div class="admin-card">
+        <h3>Menu Items</h3>
+        <button class="btn" style="background:#27ae60; color:#fff;" onclick="APP.openModal('itemMod')">+ New Item</button>
+        <div id="admItems"></div>
     </div>
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:25px; background:#27ae60; color:white; border:none; border-radius:15px; font-weight:bold; font-size:20px; position:sticky; bottom:10px; box-shadow: 0 -10px 20px rgba(0,0,0,0.1);">💾 SYNC UPDATES TO LIVE MENU</button>
+    <button id="syncBtn" onclick="APP.sync()" class="btn" style="background:var(--mocha); color:var(--canary); padding:20px; position:sticky; bottom:0;">💾 SAVE & SYNC ALL CHANGES</button>
 </div>
 
-<div id="editCatModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Edit Category</h3>
-    <input type="text" id="eCatEn" placeholder="English Name">
-    <input type="text" id="eCatAm" placeholder="Amharic Name">
-    <button onclick="APP.applyCatRename()" class="btn" style="background:#27ae60; margin-top:15px;">UPDATE CATEGORY</button>
+<div id="catMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h3>Add Category</h3>
+    <input id="ncId" placeholder="id (e.g. cake)">
+    <input id="ncEn" placeholder="English Name">
+    <input id="ncAm" placeholder="Amharic Name">
+    <input type="file" onchange="APP.pick(this)">
+    <button class="btn" style="background:#8e44ad; color:#fff;" onclick="APP.addCat()">Create</button>
 </div></div>
 
-<div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>New Category</h3>
-    <input type="text" id="nCatId" placeholder="Unique ID (e.g. donuts)">
-    <input type="text" id="nCatEn" placeholder="Name (English)">
-    <input type="text" id="nCatAm" placeholder="Name (Amharic)">
-    <input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; margin-top:15px;">CREATE</button>
+<div id="itemMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h3>Add Item</h3>
+    <select id="niCat"></select>
+    <input id="niEn" placeholder="English Name">
+    <input id="niAm" placeholder="Amharic Name">
+    <input id="niPr" placeholder="Price" type="number">
+    <input type="file" onchange="APP.pick(this)">
+    <button class="btn" style="background:#27ae60; color:#fff;" onclick="APP.addItem()">Add</button>
 </div></div>
 
-<div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add Menu Item</h3>
-    <select id="nItemCat"></select>
-    <input type="text" id="nItemEn" placeholder="English Name">
-    <input type="text" id="nItemAm" placeholder="Amharic Name">
-    <input type="text" id="nItemIng" placeholder="Ingredients">
-    <input type="number" id="nItemPrice" placeholder="Price (ETB)">
-    <input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; margin-top:15px;">ADD ITEM</button>
-</div></div>
-
-<div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--mocha-bg); margin-bottom:15px;">Admin Login</h2>
-    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
-    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha-bg); color:var(--canary-yellow); height:60px; margin-top:15px;">LOGIN</button>
+<div id="logMod" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h2 style="text-align:center;">Admin Login</h2>
+    <input id="u" placeholder="Username">
+    <input id="p" placeholder="Password" type="password">
+    <button class="btn" style="background:var(--mocha); color:var(--canary);" onclick="APP.login()">Login</button>
 </div></div>
 
 <script>
     const APP = {
-        URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
-        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null,
+        EP: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
+        items: [], cats: [], lang: 'en', active: '', tmpImg: '',
 
         init: async function() {
-            // Priority 1: Load from Local Storage (Instant)
-            const local = localStorage.getItem('TAEM_DATA');
-            if(local) {
-                const parsed = JSON.parse(local);
-                this.data = parsed.data;
-                this.cats = parsed.cats;
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+            const cached = localStorage.getItem('SGS_MASTER_DATA');
+            if(cached) {
+                const d = JSON.parse(cached);
+                this.items = d.items; this.cats = d.cats;
+                if(this.cats.length && !this.active) this.active = this.cats[0].id;
                 this.render();
             }
-
-            // Priority 2: Sync with Cloud
             try {
-                const r = await fetch(`${this.URL}?cb=${Date.now()}`);
+                const r = await fetch(`${this.EP}?cb=${Date.now()}`);
                 const j = await r.json();
-                this.data = j.items || [];
+                this.items = j.items || [];
                 this.cats = j.cats || [];
-                this.saveLocal();
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+                this.save();
+                if(this.cats.length && !this.active) this.active = this.cats[0].id;
                 this.render();
-            } catch(e) { console.log("Cloud pull failed, using local."); }
+            } catch(e) { console.log("Offline mode"); }
         },
 
-        saveLocal: function() {
-            localStorage.setItem('TAEM_DATA', JSON.stringify({data: this.data, cats: this.cats}));
-        },
+        save: function() { localStorage.setItem('SGS_MASTER_DATA', JSON.stringify({items:this.items, cats:this.cats})); },
 
         render: function() {
             const isEn = this.lang === 'en';
             document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
-            document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
-            document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
-
+            
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
-                <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
-                    <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
-                    <p>${isEn ? c.en : c.am}</p>
+                <div class="nav-item ${this.active==c.id?'active':''}" onclick="APP.setCat('${c.id}')">
+                    <img src="${c.img||''}">
+                    <p>${isEn?c.en:c.am}</p>
                 </div>`).join('');
 
-            const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
+            const filtered = this.items.filter(i => i.cat == this.active && !i.hide);
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
-                    <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
+                    <img src="${i.img||''}" class="food-img">
                     <div class="food-info">
-                        <div class="food-title">${isEn ? i.en : i.am}</div>
-                        <div class="food-ing">${i.ing || ''}</div>
+                        <div class="food-title">${isEn?i.en:i.am}</div>
                         <div class="price-tag">${i.price} ETB</div>
                     </div>
                 </div>`).join('');
@@ -182,73 +155,50 @@
         },
 
         renderAdmin: function() {
-            document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
-                <div style="background:white; padding:15px; border-radius:10px; margin-bottom:10px; border:1px solid #ddd;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span><b>${c.en}</b> / ${c.am}</span>
-                        <div>
-                            <button onclick="APP.prepRename('${c.id}')" style="background:#3498db; color:white; border:none; padding:8px 12px; border-radius:5px;">Edit</button>
-                            <button onclick="APP.deleteCat('${c.id}')" style="background:red; color:white; border:none; padding:8px 12px; border-radius:5px;">Del</button>
-                        </div>
-                    </div>
-                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="margin-top:10px; border:none; font-size:12px;">
+            document.getElementById('admCats').innerHTML = this.cats.map((c, idx) => `
+                <div style="border-bottom:1px solid #ddd; padding:10px 0;">
+                    <b>${c.en} (${c.am})</b>
+                    <input type="file" onchange="APP.updCatImg(${idx}, this)" style="border:none;">
+                    <button onclick="APP.delCat('${c.id}')" style="color:red; border:none; background:none;">Delete</button>
                 </div>`).join('');
-
-            document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
-                <div style="background:#fff; border:1px solid #ddd; padding:15px; margin-bottom:15px; border-radius:12px; ${i.hidden ? 'opacity:0.4' : ''}">
-                    <input value="${i.en}" onchange="APP.data[${idx}].en=this.value; APP.saveLocal()">
-                    <input value="${i.am}" onchange="APP.data[${idx}].am=this.value; APP.saveLocal()">
-                    <input value="${i.price}" onchange="APP.data[${idx}].price=this.value; APP.saveLocal()" type="number">
-                    <select onchange="APP.data[${idx}].cat=this.value; APP.saveLocal()">
-                        ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>${c.en}</option>`).join('')}
-                    </select>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button onclick="APP.toggleHide(${idx})" style="flex:1; background:#555; color:white; padding:10px; border:none; border-radius:8px;">${i.hidden?'Unhide':'Hide'}</button>
-                        <button onclick="APP.deleteItem(${idx})" style="flex:1; background:red; color:white; padding:10px; border:none; border-radius:8px;">Delete</button>
-                    </div>
-                    <input type="file" onchange="APP.updateItemImg(${idx}, this)" style="margin-top:8px; border:none; font-size:12px;">
+            
+            document.getElementById('admItems').innerHTML = this.items.map((i, idx) => `
+                <div class="admin-card">
+                    <input value="${i.en}" onchange="APP.items[${idx}].en=this.value">
+                    <input value="${i.price}" onchange="APP.items[${idx}].price=this.value">
+                    <button onclick="APP.items[${idx}].hide=!APP.items[${idx}].hide; APP.renderAdmin()">${i.hide?'Unhide':'Hide'}</button>
+                    <button onclick="APP.items.splice(${idx},1); APP.renderAdmin()" style="color:red;">Delete</button>
                 </div>`).join('');
-            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
+            document.getElementById('niCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
         },
 
-        setCat: function(id) { this.activeCat = id; this.render(); },
-        toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
-        showLogin: function(e) { e.stopPropagation(); document.getElementById('uIn').value=""; document.getElementById('pIn').value=""; document.getElementById('loginOverlay').style.display='flex'; },
-        closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex') this.closeModals(); },
-        verifyLogin: function() { 
-            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
-                document.getElementById('adminDashboard').style.display='block'; this.closeModals(); this.render();
-            } else { alert("Error"); }
-        },
-        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
-        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
+        setCat: function(id) { this.active = id; this.render(); },
+        toggleLang: function() { this.lang = this.lang=='en'?'am':'en'; this.render(); },
+        openLogin: function() { document.getElementById('u').value=''; document.getElementById('p').value=''; document.getElementById('logMod').style.display='flex'; },
+        login: function() { if(document.getElementById('u').value=='admin' && document.getElementById('p').value=='sgs'){ document.getElementById('adminDashboard').style.display='block'; this.closeMods(); } },
+        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; this.init(); },
+        closeMods: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
+        closeOnOutside: function(e) { if(e.target.className=='overlay') this.closeMods(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
-        handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        updateCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; this.saveLocal(); this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
-        updateItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.data[idx].img = e.target.result; this.saveLocal(); this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
-        prepRename: function(id) { this.editId = id; const c = this.cats.find(x => x.id == id); document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); },
-        applyCatRename: function() { 
-            this.cats = this.cats.map(c => c.id === this.editId ? {...c, en: document.getElementById('eCatEn').value, am: document.getElementById('eCatAm').value} : c);
-            this.saveLocal(); this.closeModals(); this.render();
+        pick: function(input) { const r = new FileReader(); r.onload = (e) => this.tmpImg = e.target.result; r.readAsDataURL(input.files[0]); },
+        updCatImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.cats[idx].img = e.target.result; this.save(); this.render(); }; r.readAsDataURL(input.files[0]); },
+        addCat: function() { 
+            const id = document.getElementById('ncId').value;
+            if(id) { this.cats.push({id, en: document.getElementById('ncEn').value, am: document.getElementById('ncAm').value, img: this.tmpImg}); this.tmpImg=''; this.save(); this.closeMods(); this.render(); }
         },
-        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.saveLocal(); this.render(); } },
-        createNewCat: function() { 
-            const id = document.getElementById('nCatId').value.trim().toLowerCase(); 
-            if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.imgTmp=""; this.saveLocal(); this.closeModals(); this.render(); } 
+        addItem: function() {
+            this.items.push({cat: document.getElementById('niCat').value, en: document.getElementById('niEn').value, am: document.getElementById('niAm').value, price: document.getElementById('niPr').value, img: this.tmpImg, hide: false});
+            this.tmpImg=''; this.save(); this.closeMods(); this.render();
         },
-        createNewItem: function() { 
-            this.data.push({ id: Date.now(), cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false }); 
-            this.imgTmp=""; this.saveLocal(); this.closeModals(); this.render(); 
-        },
-        toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.saveLocal(); this.renderAdmin(); },
-        deleteItem: function(idx) { if(confirm("Delete item?")) { this.data.splice(idx, 1); this.saveLocal(); this.renderAdmin(); } },
-        saveToCloud: async function() {
-            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
+        delCat: function(id) { if(confirm("Delete?")) { this.cats = this.cats.filter(c => c.id != id); this.save(); this.render(); } },
+        sync: async function() {
+            const b = document.getElementById('syncBtn'); b.innerText = "UPLOADING..."; b.disabled = true;
+            this.save();
             try {
-                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Saved Successfully!");
-            } catch(e) { alert("Network Error"); }
-            finally { b.innerText = "💾 SYNC UPDATES TO LIVE MENU"; b.disabled = false; }
+                await fetch(this.EP, { method: 'POST', mode: 'no-cors', body: JSON.stringify({items:this.items, cats:this.cats}) });
+                alert("Master Sync Complete!");
+            } catch(e) { alert("Sync Failed"); }
+            finally { b.innerText = "💾 SAVE & SYNC ALL CHANGES"; b.disabled = false; }
         }
     };
     window.onload = () => APP.init();
