@@ -6,22 +6,26 @@
     <title>TAEM BAKERY & PASTRY - Professional Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* BRAND SETTINGS - TAEM BAKERY & PASTRY */
+        /* BRAND SETTINGS - TAEM BAKERY & PASTRY (WHITE THEME) */
         :root { 
-            --p-yellow: #FFD700;   /* Gold/Yellow from Logo */
-            --header-black: #000000; /* Requested Black Header */
-            --p-red: #D32F2F;      /* Brand Red for Accents */
-            --p-white: #FFFFFF;    
+            --p-yellow: #FFD700;   /* Gold/Yellow for Name */
+            --p-red: #D32F2F;      /* Red for Labels */
+            --bg-white: #FFFFFF;    
             --dark-text: #2D2D2D;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--p-white); color: var(--dark-text); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
+        body { background: var(--bg-white); color: var(--dark-text); font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        /* HEADER - Black with Logo */
-        .header { background: var(--header-black); color: var(--p-yellow); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 145px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .logo-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--p-yellow); margin-right: 10px; flex-shrink: 0; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; text-align: left; flex-grow: 1; text-transform: uppercase; line-height: 1.2; }
+        /* HEADER - White Theme */
+        .header { background: var(--bg-white); color: var(--p-yellow); padding: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; height: 145px; border-bottom: 2px solid #f0f0f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .menu-toggle { position: absolute; left: 15px; top: 20px; font-size: 28px; cursor: pointer; color: var(--dark-text); }
+        .lang-toggle { position: absolute; right: 15px; top: 20px; background: var(--p-red); color: white; border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; font-size: 11px; }
+        
+        .header h1 { font-family: 'Playfair Display'; font-size: 28px; font-weight: 900; text-align: center; text-transform: uppercase; line-height: 1.1; margin-top: 10px; text-shadow: 1px 1px 1px rgba(0,0,0,0.1); }
+        .sub-labels { text-align: center; width: 100%; }
+        .sub-labels #subTitle { color: var(--p-red); font-size: 14px; font-weight: 800; letter-spacing: 4px; margin-top: 5px; }
+        .sub-labels #vatNote { color: var(--p-red); font-size: 11px; font-weight: 600; margin-top: 2px; }
         
         /* NAVIGATION */
         .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 145px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
@@ -38,7 +42,7 @@
         .food-ing { font-size: 14px; color: #666; font-style: italic; }
         .price-tag { font-weight: bold; color: #333; margin-top: 5px; font-size: 19px; background: var(--p-yellow); display: inline-block; padding: 2px 10px; border-radius: 4px; }
 
-        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--p-red); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid var(--p-yellow); }
+        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--p-red); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
         /* ADMIN DASHBOARD */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
@@ -58,14 +62,15 @@
 <body onclick="APP.closeOnOutside(event)">
 
 <header class="header">
-    <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
-    <img src="https://i.ibb.co/hR0Z4T9/Gemini-Generated-Image-i1hmjvi1hmjvi1hm.jpg" class="logo-img" alt="Logo">
-    <div style="text-align:left; flex-grow:1;">
+    <div onclick="APP.showLogin(event)" class="menu-toggle">☰</div>
+    <div style="text-align:center;">
         <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
-        <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px; color:white;">MENU</div>
-        <div id="vatNote" style="font-size:10px; opacity:0.9; margin-top:4px; color:white;">All prices include VAT</div>
+        <div class="sub-labels">
+            <div id="subTitle">MENU</div>
+            <div id="vatNote">All prices include VAT</div>
+        </div>
     </div>
-    <button onclick="APP.toggleLang()" style="background:var(--p-yellow); color:var(--header-black); border:none; padding:10px 15px; border-radius:20px; font-weight:bold; font-size:12px;">EN/አማ</button>
+    <button onclick="APP.toggleLang()" class="lang-toggle">EN/አማ</button>
 </header>
 
 <nav class="nav-bar" id="categoryNav"></nav>
@@ -74,7 +79,7 @@
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Order Now</span></a>
 
 <div id="adminDashboard">
-    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--header-black); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--dark-text); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
         <h3 style="margin:0">TAEM MANAGER</h3>
         <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
     </div>
@@ -87,7 +92,7 @@
 
     <div class="admin-section">
         <h4>2. Menu Items Management</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW BAKERY ITEM</button>
+        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW ITEM</button>
         <div style="overflow-x:auto;">
             <table><tbody id="adminItemBody"></tbody></table>
         </div>
@@ -112,7 +117,7 @@
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add Bakery Item</h3>
+    <h3>Add Item</h3>
     <select id="nItemCat"></select>
     <input type="text" id="nItemEn" placeholder="Name (English)">
     <input type="text" id="nItemAm" placeholder="Name (Amharic)">
@@ -123,10 +128,10 @@
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--dark-text); margin-bottom:5px;">Welcome To TAEM Bakery</h2>
+    <h2 style="color:var(--dark-text); margin-bottom:5px;">Manager Login</h2>
     <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
     <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--header-black); color:var(--p-yellow); width:100%; margin-top:15px; height:50px;">LOGIN</button>
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--p-red); color:white; width:100%; margin-top:15px; height:50px;">LOGIN</button>
 </div></div>
 
 <script>
