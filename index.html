@@ -28,6 +28,7 @@
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
         
+        .cat-admin-card { background: white; padding: 12px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 5px; border-bottom: 1px solid #eee; }
         .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
@@ -52,6 +53,7 @@
 
 <nav class="nav-bar" id="categoryNav"></nav>
 <div class="container" id="menuListing"></div>
+
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
@@ -77,12 +79,12 @@
 </div>
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>New Category</h3>
-    <input type="text" id="nCatId" placeholder="Unique ID (e.g. bread1)">
+    <h3 id="catModalHeader">New Category</h3>
+    <input type="text" id="nCatId" placeholder="Unique ID (e.g. cakes)">
     <input type="text" id="nCatEn" placeholder="English Name">
     <input type="text" id="nCatAm" placeholder="Amharic Name">
     <input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
+    <button id="catActionBtn" onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
@@ -106,7 +108,7 @@
 <script>
     const APP = {
         URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
-        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '',
+        data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editIdx: -1,
 
         init: async function() {
             try {
@@ -114,120 +116,100 @@
                 const j = await r.json();
                 this.data = j.items || [];
                 this.cats = j.cats || [];
-                
-                // Persistence check: If a category is selected, keep it. Else pick first.
-                if(this.cats.length > 0) {
-                    if(!this.activeCat || !this.cats.find(c => c.id == this.activeCat)) {
-                        this.activeCat = this.cats[0].id;
-                    }
-                }
+                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
                 this.render();
-            } catch(e) { console.error("Load Error"); }
+            } catch(e) { console.error("Sync Error"); }
         },
 
         render: function() {
             const isEn = this.lang === 'en';
             document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
-            document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             
-            // Render Nav
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
                     <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
                     <p>${isEn ? c.en : c.am}</p>
                 </div>`).join('');
 
-            // Render Items
             const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
                     <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <div>
-                        <div class="food-title">${isEn ? i.en : i.am}</div>
-                        <div style="font-size:14px; color:#777;">${i.ing || ''}</div>
-                        <div class="price-tag">${i.price} ETB</div>
-                    </div>
+                    <div><div class="food-title">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
                 </div>`).join('');
             this.renderAdmin();
         },
 
         renderAdmin: function() {
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
-                <div style="background:#fff; padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                <div class="cat-admin-card">
                     <span><b>${c.en}</b> / ${c.am}</span>
-                    <button onclick="APP.deleteCat('${c.id}')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:4px;">Del</button>
+                    <div>
+                        <button onclick="APP.editCat(${idx})" style="background:#3498db; color:white; border:none; padding:5px 10px; border-radius:4px; margin-right:5px;">Edit</button>
+                        <button onclick="APP.deleteCat('${c.id}')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:4px;">Del</button>
+                    </div>
                 </div>`).join('');
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td>
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value">
-                    </td>
+                    <td><input value="${i.en}" onchange="APP.data[${idx}].en=this.value"><input value="${i.am}" onchange="APP.data[${idx}].am=this.value"></td>
                     <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
-                    <td>
-                        <button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button>
-                        <button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none;">Del</button>
-                    </td>
+                    <td><button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button><button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none;">Del</button></td>
                 </tr>`).join('');
             document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
         },
 
+        editCat: function(idx) {
+            this.editIdx = idx;
+            const c = this.cats[idx];
+            document.getElementById('catModalHeader').innerText = "Edit Category";
+            document.getElementById('nCatId').value = c.id;
+            document.getElementById('nCatEn').value = c.en;
+            document.getElementById('nCatAm').value = c.am;
+            document.getElementById('catActionBtn').innerText = "SAVE CHANGES";
+            this.openModal('catModal');
+        },
+
         createNewCat: function() {
             const id = document.getElementById('nCatId').value.trim();
-            if(!id) return alert("Enter a Unique ID");
-            this.cats.push({
-                id: id, 
-                en: document.getElementById('nCatEn').value, 
-                am: document.getElementById('nCatAm').value, 
-                img: this.imgTmp
-            });
-            this.imgTmp = '';
-            this.closeModals();
-            this.render(); // Show it immediately on the page
+            if(!id) return alert("ID Required");
+            
+            const payload = { id, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp || (this.editIdx > -1 ? this.cats[this.editIdx].img : '') };
+            
+            if(this.editIdx > -1) this.cats[this.editIdx] = payload;
+            else this.cats.push(payload);
+            
+            this.editIdx = -1; this.imgTmp = '';
+            this.closeModals(); this.render();
         },
 
         createNewItem: function() {
-            this.data.push({
-                cat: document.getElementById('nItemCat').value,
-                en: document.getElementById('nItemEn').value,
-                am: document.getElementById('nItemAm').value,
-                ing: document.getElementById('nItemIng').value,
-                price: document.getElementById('nItemPrice').value,
-                img: this.imgTmp,
-                hidden: false
-            });
-            this.imgTmp = '';
-            this.closeModals();
-            this.render();
+            this.data.push({ cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false });
+            this.imgTmp = ''; this.closeModals(); this.render();
         },
 
         saveToCloud: async function() {
             const b = document.getElementById('cloudBtn');
-            b.innerText = "SAVING TO GOOGLE SHEET..."; b.disabled = true;
+            b.innerText = "UPDATING..."; b.disabled = true;
             try {
-                // We send the full local state (cats + items) to the Sheet
+                // IMPORTANT: Sending BOTH items and cats in one go
                 await fetch(this.URL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
-                    body: JSON.stringify({ items: this.data, cats: this.cats, ts: Date.now() }) 
+                    body: JSON.stringify({ items: this.data, cats: this.cats, updateTime: Date.now() }) 
                 });
-                alert("Saved Successfully! All devices will update.");
-                this.init(); // Re-fetch to confirm it's on the server
-            } catch(e) { alert("Network Error - check your internet"); }
+                alert("Master Update Successful!");
+                this.init(); // Refresh data from cloud
+            } catch(e) { alert("Sync Error"); }
             finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
         },
 
         setCat: function(id) { this.activeCat = id; this.render(); },
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
-        verifyLogin: function() { 
-            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
-                document.getElementById('adminDashboard').style.display='block'; this.closeModals(); 
-            } else { alert("Login Failed"); }
-        },
+        verifyLogin: function() { if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ document.getElementById('adminDashboard').style.display='block'; this.closeModals(); } },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
-        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
+        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.editIdx = -1; document.getElementById('catModalHeader').innerText = "New Category"; document.getElementById('catActionBtn').innerText = "CREATE"; },
         closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
