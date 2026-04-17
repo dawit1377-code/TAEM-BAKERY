@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - MASTER</title>
+    <title>TAEM BAKERY & PASTRY - MASTER PROFESSIONAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* BRAND SETTINGS */
@@ -16,13 +16,11 @@
         .header { background: var(--mocha); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
         .header h1 { 
             font-family: 'Playfair Display'; 
-            font-size: 26px; /* Adjusted slightly to fit */
+            font-size: 24px; 
             font-weight: 800; 
             text-align: center; 
             flex-grow: 1; 
-            white-space: nowrap; /* Keeps name on one line */
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
         /* NAVIGATION */
@@ -30,6 +28,7 @@
         .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
         .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha); border-bottom-color: var(--p-yellow); }
         .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
+        .nav-item p { font-size: 16px; font-weight: 600; }
 
         /* MENU CARDS */
         .container { padding: 15px; }
@@ -40,14 +39,19 @@
 
         .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--mocha); color: var(--p-yellow); padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-        /* ADMIN DASHBOARD - RESTORED ORIGINAL STRETCH */
+        /* ADMIN DASHBOARD - FULL MASTER VERSION */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
-        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; }
+        
+        .cat-row { background: white; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
+        .cat-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 10px 5px; border-bottom: 1px solid #eee; }
+        td { padding: 12px 5px; border-bottom: 1px solid #eee; }
+        
+        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
+        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
         .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
@@ -57,31 +61,33 @@
 
 <header class="header">
     <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
-    <div style="text-align:center; flex: 1; overflow: hidden;">
+    <div style="text-align:center;">
         <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
         <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px;">MENU</div>
+        <div id="vatNote" style="font-size:10px; opacity:0.8; margin-top:4px;">All prices include VAT</div>
     </div>
     <button onclick="APP.toggleLang()" style="background:var(--p-yellow); color:var(--mocha); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
 </header>
 
 <nav class="nav-bar" id="categoryNav"></nav>
 <div class="container" id="menuListing"></div>
+
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
-        <h3 style="margin:0">TAEM MANAGEMENT</h3>
+        <h3 id="adminHeaderTitle">TAEM MANAGEMENT</h3>
         <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
     </div>
     
     <div class="admin-section">
-        <h4>1. Category Management</h4>
+        <h4 id="adminSection1">1. Category Management</h4>
         <div id="adminCatList"></div>
         <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:55px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
     </div>
 
     <div class="admin-section">
-        <h4>2. Menu Items Management</h4>
+        <h4 id="adminSection2">2. Menu Items Management</h4>
         <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
         <div style="overflow-x:auto;">
             <table><tbody id="adminItemBody"></tbody></table>
@@ -100,7 +106,7 @@
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add New Food Item</h3>
+    <h3>Add New Item</h3>
     <select id="nItemCat"></select>
     <input type="text" id="nItemEn" placeholder="Name (English)">
     <input type="text" id="nItemAm" placeholder="Name (Amharic)">
@@ -123,16 +129,16 @@
         data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '',
 
         init: async function() {
-            // LOAD LOCAL FIRST
-            const saved = localStorage.getItem('TAEM_STORE_MASTER');
-            if(saved) {
-                const p = JSON.parse(saved);
+            // LOAD LOCAL MEMORY (PERSISTENCE)
+            const local = localStorage.getItem('TAEM_PROFESSIONAL_DATA');
+            if(local) {
+                const p = JSON.parse(local);
                 this.data = p.data; this.cats = p.cats;
-                if(this.cats.length > 0) this.activeCat = this.cats[0].id;
+                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
                 this.render();
             }
 
-            // THEN FETCH CLOUD
+            // SYNC WITH CLOUD
             try {
                 const r = await fetch(`${this.URL}?t=${Date.now()}`);
                 const j = await r.json();
@@ -143,17 +149,26 @@
                     if(!this.activeCat) this.activeCat = this.cats[0].id;
                     this.render();
                 }
-            } catch(e) { console.log("Offline or Syncing..."); }
+            } catch(e) { console.log("Sync delay..."); }
         },
 
         saveLocal: function() {
-            localStorage.setItem('TAEM_STORE_MASTER', JSON.stringify({data: this.data, cats: this.cats}));
+            localStorage.setItem('TAEM_PROFESSIONAL_DATA', JSON.stringify({data: this.data, cats: this.cats}));
         },
 
         render: function() {
             const isEn = this.lang === 'en';
+            
+            // UI TEXTS
             document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
+            document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
+            document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
+            
+            // ADMIN UI TEXTS
+            document.getElementById('adminHeaderTitle').innerText = isEn ? "TAEM MANAGEMENT" : "የጣዕም አስተዳደር";
+            document.getElementById('adminSection1').innerText = isEn ? "1. Category Management" : "1. የምድብ አስተዳደር";
+            document.getElementById('adminSection2').innerText = isEn ? "2. Menu Items Management" : "2. የምግብ ዝርዝር አስተዳደር";
 
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
@@ -167,7 +182,7 @@
                     <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
                     <div>
                         <div class="food-title">${isEn ? i.en : i.am}</div>
-                        <div style="font-size:13px; color:#666;">${i.ing || ''}</div>
+                        <div style="font-size:13px; color:#666; font-style:italic;">${i.ing || ''}</div>
                         <div class="price-tag">${i.price} ETB</div>
                     </div>
                 </div>`).join('');
@@ -176,24 +191,24 @@
 
         renderAdmin: function() {
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
-                <div class="admin-section" style="background:#fff; margin-bottom:10px; padding:10px;">
-                    <div style="display:flex; justify-content:space-between;">
-                        <b>${c.en} (${c.am})</b>
-                        <button onclick="APP.deleteCat('${c.id}')" style="color:red; border:none; background:none; font-weight:bold;">Delete</button>
+                <div class="cat-row">
+                    <div class="cat-info">
+                        <span><b>${c.en}</b> / ${c.am}</span>
+                        <button onclick="APP.deleteCat('${c.id}')" style="background:#e74c3c; color:white; border:none; padding:8px 12px; border-radius:6px;">Del</button>
                     </div>
-                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="font-size:10px; border:none;">
+                    <input type="file" onchange="APP.updateCatImg(${idx}, this)" style="font-size:11px; border:none;">
                 </div>`).join('');
 
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td style="width:60%">
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" style="font-weight:bold; height:35px;">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" style="height:35px;">
+                    <td style="width:55%">
+                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="EN Name">
+                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="AM Name">
                         <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" placeholder="Ingredients" style="font-size:11px;">
                     </td>
                     <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
                     <td>
-                        <button onclick="APP.toggleHide(${idx})" style="padding:5px; width:100%; margin-bottom:5px;">${i.hidden?'Show':'Hide'}</button>
+                        <button onclick="APP.toggleHide(${idx})" style="width:100%; margin-bottom:5px;">${i.hidden?'Show':'Hide'}</button>
                         <button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none; width:100%;">Del</button>
                     </td>
                 </tr>`).join('');
@@ -204,10 +219,12 @@
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
         verifyLogin: function() { 
+            // CREDENTIALS ARE NEVER SAVED TO LOCALSTORAGE
             if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
                 document.getElementById('adminDashboard').style.display='block'; 
+                document.getElementById('uIn').value=''; document.getElementById('pIn').value='';
                 this.closeModals(); 
-            }
+            } else { alert("Login Failed"); }
         },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
@@ -225,17 +242,17 @@
             this.saveLocal(); this.closeModals(); this.render();
         },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.saveLocal(); this.render(); },
-        deleteCat: function(id) { if(confirm("Delete?")) { this.cats = this.cats.filter(c => c.id != id); this.saveLocal(); this.render(); } },
-        deleteItem: function(idx) { if(confirm("Delete?")) { this.data.splice(idx, 1); this.saveLocal(); this.render(); } },
+        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.saveLocal(); this.render(); } },
+        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.saveLocal(); this.render(); } },
 
         saveToCloud: async function() {
             const b = document.getElementById('cloudBtn');
-            b.innerText = "SYNCING TO CLOUD..."; b.disabled = true;
+            b.innerText = "SYNCING..."; b.disabled = true;
             this.saveLocal();
             try {
                 await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
                 alert("Cloud Sync Successful!");
-            } catch(e) { alert("Sync Error - Data saved locally on this device."); }
+            } catch(e) { alert("Sync Error - Data saved locally."); }
             finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
         }
     };
