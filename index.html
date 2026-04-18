@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY - MASTER PROFESSIONAL</title>
+    <title>HOTEL MENU - MASTER V1</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --p-yellow: #FFEF00; --mocha: #3B270C; --bg: #ffffff; }
+        /* =========================================
+           1. MANUAL BRAND COLOR SETTINGS
+           ========================================= */
+        :root { 
+            --p-yellow: #FFEF00;  /* Primary Accent Color */
+            --mocha: #3B270C;     /* Dark Branding Color */
+            --bg: #ffffff; 
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        /* HEADER */
         .header { background: var(--mocha); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
         .header h1 { font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; text-align: center; flex-grow: 1; white-space: nowrap; }
         
-        /* NAV & CARDS */
         .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
         .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
         .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha); border-bottom-color: var(--p-yellow); }
         .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
+
         .container { padding: 15px; }
         .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
+        .food-title { color: var(--mocha); font-size: 20px; font-weight: 600; }
         .price-tag { font-weight: bold; color: #333; margin-top: 5px; font-size: 18px; background: var(--p-yellow); display: inline-block; padding: 2px 8px; border-radius: 4px; }
 
-        /* ADMIN MASTER UI */
+        /* ADMIN UI */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
-        .price-box { width: 85px !important; height: 40px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
         input, select { width: 100%; padding: 10px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
         
@@ -43,9 +51,8 @@
 <header class="header">
     <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
     <div style="text-align:center;">
-        <h1 id="mainTitle">TAEM BAKERY & PASTRY</h1>
+        <h1 id="mainTitle">LOADING...</h1>
         <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px;">MENU</div>
-        <div id="vatNote" style="font-size:10px; opacity:0.8; margin-top:4px;">All prices include VAT</div>
     </div>
     <button onclick="APP.toggleLang()" style="background:var(--p-yellow); color:var(--mocha); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
 </header>
@@ -56,45 +63,44 @@
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
-        <h3 id="adminHeaderTitle">TAEM MANAGEMENT</h3>
+        <h3>MANAGEMENT</h3>
         <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
     </div>
 
     <div class="admin-section">
-        <h4 id="adminSection1">1. Category Management (Add/Rename/Upload)</h4>
+        <h4>1. Categories</h4>
         <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px;" onclick="APP.openModal('catModal')">+ ADD CATEGORY</button>
     </div>
 
     <div class="admin-section">
-        <h4 id="adminSection2">2. Menu Items Management (Move/Rename/Price/Delete)</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:15px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
+        <h4>2. Food Items</h4>
+        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:15px;" onclick="APP.openModal('itemModal')">+ ADD FOOD ITEM</button>
         <div style="overflow-x:auto;">
             <table><tbody id="adminItemBody"></tbody></table>
         </div>
     </div>
     
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; position:sticky; bottom:10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);">💾 SYNC ALL CHANGES GLOBALLY</button>
+    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold;">💾 SYNC TO GOOGLE SHEET</button>
 </div>
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3 id="catModalTitle">Category Settings</h3>
+    <h3>Category Editor</h3>
     <input type="text" id="nCatId" placeholder="ID (Unique Name)">
     <input type="text" id="nCatEn" placeholder="English Name">
     <input type="text" id="nCatAm" placeholder="Amharic Name">
-    <p style="font-size:12px; margin-top:10px;">Upload Image:</p>
     <input type="file" onchange="APP.handleImg(this)">
-    <button id="catSubmitBtn" onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">SAVE CATEGORY</button>
+    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">SAVE</button>
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Food Item Settings</h3>
+    <h3>Food Editor</h3>
     <select id="nItemCat"></select>
-    <input type="text" id="nItemEn" placeholder="Name (English)">
-    <input type="text" id="nItemAm" placeholder="Name (Amharic)">
+    <input type="text" id="nItemEn" placeholder="English Name">
+    <input type="text" id="nItemAm" placeholder="Amharic Name">
     <input type="number" id="nItemPrice" placeholder="Price">
     <input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD TO MENU</button>
+    <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD</button>
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
@@ -106,13 +112,24 @@
 
 <script>
     const APP = {
+        // =========================================
+        // 2. MANUAL HOTEL NAMES
+        // =========================================
+        HOTEL_NAMES: {
+            en: "TAEM BAKERY & PASTRY",
+            am: "ጣዕም ዳቦና ኬክ"
+        },
+
+        // =========================================
+        // 3. MANUAL GOOGLE SHEET URL
+        // =========================================
         URL: "https://script.google.com/macros/s/AKfycbwMJhw_-L2p7UGqfdoSGF4w6j2MUHPeSRfiRX7iBQtLQX1TPHGgh_7VFKKNdoTQ-IGK/exec",
+        
         data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editIdx: -1,
 
         init: async function() {
             this.loadCloud();
-            // Pull changes from other devices every 30 seconds
-            setInterval(() => this.loadCloud(), 30000);
+            setInterval(() => this.loadCloud(), 45000); // Auto-refresh every 45s
         },
 
         loadCloud: async function() {
@@ -125,74 +142,56 @@
                     if(!this.activeCat && this.cats.length > 0) this.activeCat = this.cats[0].id;
                     this.render();
                 }
-            } catch(e) { console.log("Waiting for cloud..."); }
+            } catch(e) { console.log("Connecting..."); }
         },
 
         render: function() {
             const isEn = this.lang === 'en';
-            document.getElementById('mainTitle').innerText = isEn ? "TAEM BAKERY & PASTRY" : "ጣዕም ዳቦና ኬክ";
-            
+            // Set Hotel Name
+            document.getElementById('mainTitle').innerText = isEn ? this.HOTEL_NAMES.en : this.HOTEL_NAMES.am;
+            document.title = this.HOTEL_NAMES.en;
+
+            // Nav
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
                     <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
                     <p>${isEn ? c.en : c.am}</p>
                 </div>`).join('');
 
+            // Items
             const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
                     <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <div><div class="food-title" style="font-weight:600; font-size:18px;">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
+                    <div><div class="food-title">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
                 </div>`).join('');
             this.renderAdmin();
         },
 
         renderAdmin: function() {
-            // CATEGORY MANAGEMENT (Master)
+            // Category List
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
                 <div style="background:#fff; padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
                     <span><b>${c.en}</b></span>
-                    <div>
-                        <button onclick="APP.editCat(${idx})" style="padding:5px 10px; background:#3498db; color:white; border:none; border-radius:4px;">Edit/Upload</button>
-                        <button onclick="APP.deleteCat('${c.id}')" style="padding:5px 10px; background:#e74c3c; color:white; border:none; border-radius:4px;">Del</button>
-                    </div>
+                    <button onclick="APP.deleteCat('${c.id}')" style="padding:5px 10px; background:red; color:white; border:none; border-radius:4px;">Del</button>
                 </div>`).join('');
 
-            // ITEM MANAGEMENT (Master Table)
+            // Item Table
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td>
-                        <button onclick="APP.move(${idx},-1)">▲</button><br><button onclick="APP.move(${idx},1)">▼</button>
-                    </td>
-                    <td style="width:50%">
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value">
-                        <select onchange="APP.data[${idx}].cat=this.value" style="font-size:11px;">
-                            ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>${c.en}</option>`).join('')}
-                        </select>
-                    </td>
-                    <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
-                    <td>
-                        <button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button>
-                        <button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none; display:block; margin-top:5px;">Del</button>
-                    </td>
+                    <td><button onclick="APP.move(${idx},-1)">▲</button><br><button onclick="APP.move(${idx},1)">▼</button></td>
+                    <td><input value="${i.en}" onchange="APP.data[${idx}].en=this.value"></td>
+                    <td><input type="number" style="width:70px" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
+                    <td><button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none;">Del</button></td>
                 </tr>`).join('');
             document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
         },
 
-        editCat: function(idx) {
-            this.editIdx = idx; const c = this.cats[idx];
-            document.getElementById('nCatId').value = c.id;
-            document.getElementById('nCatEn').value = c.en;
-            document.getElementById('nCatAm').value = c.am;
-            this.openModal('catModal');
-        },
-
         createNewCat: function() {
-            const payload = { id: document.getElementById('nCatId').value, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp || (this.editIdx > -1 ? this.cats[this.editIdx].img : '') };
-            if(this.editIdx > -1) this.cats[this.editIdx] = payload;
-            else this.cats.push(payload);
-            this.editIdx = -1; this.imgTmp = ''; this.closeModals(); this.render();
+            const id = document.getElementById('nCatId').value;
+            if(!id) return;
+            this.cats.push({ id, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp });
+            this.imgTmp = ''; this.closeModals(); this.render();
         },
 
         createNewItem: function() {
@@ -200,39 +199,34 @@
             this.imgTmp = ''; this.closeModals(); this.render();
         },
 
-        move: function(idx, dir) {
-            let t = idx + dir; if(t >= 0 && t < this.data.length) { [this.data[idx], this.data[t]] = [this.data[t], this.data[idx]]; this.render(); }
-        },
-
         saveToCloud: async function() {
             const b = document.getElementById('cloudBtn'); b.innerText = "SAVING..."; b.disabled = true;
             try {
-                // Sending BOTH Cats and Items
-                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, sync: Date.now() }) });
-                alert("Saved to Google Sheets! All devices will sync in seconds.");
+                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
+                alert("Success! Changes are live.");
                 this.loadCloud();
-            } catch(e) { alert("Sync failed."); }
-            finally { b.innerText = "💾 SYNC ALL CHANGES GLOBALLY"; b.disabled = false; }
+            } catch(e) { alert("Save failed."); }
+            finally { b.innerText = "💾 SYNC TO GOOGLE SHEET"; b.disabled = false; }
         },
 
         verifyLogin: function() {
             const u = document.getElementById('uIn'), p = document.getElementById('pIn');
             if(u.value==='admin' && p.value==='sgs'){
                 document.getElementById('adminDashboard').style.display='block';
-                u.value = ''; p.value = ''; // CLEAR IMMEDIATELY FOR SECURITY
                 this.closeModals();
-            } else { alert("Wrong Login"); u.value = ''; p.value = ''; }
+            } else { alert("Error"); }
+            u.value = ''; p.value = ''; // SECURITY: Clear password always
         },
 
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         setCat: function(id) { this.activeCat = id; this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
-        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.editIdx = -1; },
+        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
         closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
+        move: function(idx, dir) { let t = idx + dir; if(t >= 0 && t < this.data.length) { [this.data[idx], this.data[t]] = [this.data[t], this.data[idx]]; this.render(); } },
         deleteCat: function(id) { if(confirm("Del?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
         deleteItem: function(idx) { if(confirm("Del?")) { this.data.splice(idx, 1); this.render(); } }
     };
