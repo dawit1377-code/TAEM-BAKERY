@@ -36,10 +36,29 @@
 
         /* MENU CARDS */
         .container { padding: 15px; }
-        .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card { display: flex; 
+    align-items: flex-start; /* Change from center to top for long text */
+    background: white; 
+    border-radius: 12px; 
+    margin-bottom: 15px; 
+    padding: 12px; 
+    border: 1px solid #f0f0f0; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    min-height: 125px; /* Ensures card is at least as tall as the image */ }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
-        .food-title { color: var(--p-green); font-size: 20px; font-weight: 600; }
-        .food-ing { font-size: 14px; color: #777; font-style: italic; }
+        .food-title { color: var(--p-green); 
+    font-size: 20px; 
+    font-weight: 600; 
+    word-wrap: break-word; /* Fix for long titles */
+    overflow-wrap: break-word; }
+        .food-ing { font-size: 14px; 
+    color: #777; 
+    font-style: italic; 
+    word-wrap: break-word; /* Fix for long ingredient lists */
+    overflow-wrap: break-word;
+    display: block; /* Ensures it takes up its own line and stays contained */
+    margin-top: 4px;
+    max-width: 100%; /* Keeps it from pushing the card width out */ }
         .price-tag { font-weight: bold; color: var(--dark-green); margin-top: 5px; font-size: 18px; }
 
         .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -55,7 +74,7 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 5px; border-bottom: 1px solid #eee; }
         
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
+        .price-box { width: 130px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
         input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
@@ -128,7 +147,7 @@
     <input type="text" id="nItemEn" placeholder="Name (English)">
     <input type="text" id="nItemAm" placeholder="Name (Amharic)">
     <input type="text" id="nItemIng" placeholder="Ingredients">
-    <input type="number" id="nItemPrice" placeholder="Price">
+    <input type="text" id="nItemPrice" placeholder="Price">
     <input type="file" onchange="APP.handleImg(this)">
     <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD TO MENU</button>
 </div></div>
@@ -239,7 +258,7 @@
                         </select>
                         <input type="file" onchange="APP.updateItemImg(${idx}, this)" style="font-size:10px; border:none;">
                     </td>
-                    <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
+                    <td><input type="text" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
                     <td style="text-align:right">
                         <button onclick="APP.toggleHide(${idx})" style="background:#555; color:white; border:none; padding:8px; width:100%; margin-bottom:5px;">${i.hidden?'Show':'Hide'}</button>
                         <button onclick="APP.deleteItem(${idx})" style="background:red; color:white; border:none; padding:8px; width:100%;">Del</button>
