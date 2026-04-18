@@ -10,29 +10,28 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
+        /* HEADER */
         .header { background: var(--mocha); color: var(--p-yellow); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 26px; font-weight: 800; text-align: center; flex-grow: 1; white-space: nowrap; }
+        .header h1 { font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; text-align: center; flex-grow: 1; white-space: nowrap; }
         
+        /* NAV & CARDS */
         .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
         .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
         .nav-item.active { opacity: 1; font-weight: bold; color: var(--mocha); border-bottom-color: var(--p-yellow); }
         .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
-
         .container { padding: 15px; }
         .card { display: flex; align-items: center; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
-        .food-title { color: var(--mocha); font-size: 20px; font-weight: 600; }
-        .price-tag { font-weight: bold; color: var(--mocha); margin-top: 5px; font-size: 18px; background: var(--p-yellow); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+        .price-tag { font-weight: bold; color: #333; margin-top: 5px; font-size: 18px; background: var(--p-yellow); display: inline-block; padding: 2px 8px; border-radius: 4px; }
 
+        /* ADMIN MASTER UI */
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        td { padding: 10px 4px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .price-box { width: 85px !important; height: 40px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; }
+        input, select { width: 100%; padding: 10px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
-        
-        .cat-admin-card { background: white; padding: 12px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 12px 5px; border-bottom: 1px solid #eee; }
-        .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--mocha) !important; color: var(--mocha); }
-        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
         .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
@@ -53,56 +52,56 @@
 
 <nav class="nav-bar" id="categoryNav"></nav>
 <div class="container" id="menuListing"></div>
-
 <a href="tel:+251954954591" class="call-order-btn">📞 <span id="callBtnText">Call To Order</span></a>
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--mocha); padding:20px; color:var(--p-yellow); border-radius:12px; margin-bottom: 20px;">
-        <h3 style="margin:0">MANAGEMENT</h3>
+        <h3 id="adminHeaderTitle">TAEM MANAGEMENT</h3>
         <button onclick="APP.closeAdmin()" style="color:var(--p-yellow); border:none; background:none; font-size:40px;">&times;</button>
-    </div>
-    
-    <div class="admin-section">
-        <h4>1. Category Management</h4>
-        <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:55px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
     </div>
 
     <div class="admin-section">
-        <h4>2. Menu Items Management</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
+        <h4 id="adminSection1">1. Category Management (Add/Rename/Upload)</h4>
+        <div id="adminCatList"></div>
+        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
+    </div>
+
+    <div class="admin-section">
+        <h4 id="adminSection2">2. Menu Items Management (Move/Rename/Price/Delete)</h4>
+        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:15px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
         <div style="overflow-x:auto;">
             <table><tbody id="adminItemBody"></tbody></table>
         </div>
     </div>
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; font-size:18px; position:sticky; bottom:10px;">💾 SYNC ALL CHANGES</button>
+    
+    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; position:sticky; bottom:10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);">💾 SYNC ALL CHANGES GLOBALLY</button>
 </div>
 
 <div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3 id="catModalHeader">New Category</h3>
-    <input type="text" id="nCatId" placeholder="Unique ID (e.g. cakes)">
+    <h3 id="catModalTitle">Category Settings</h3>
+    <input type="text" id="nCatId" placeholder="ID (Unique Name)">
     <input type="text" id="nCatEn" placeholder="English Name">
     <input type="text" id="nCatAm" placeholder="Amharic Name">
+    <p style="font-size:12px; margin-top:10px;">Upload Image:</p>
     <input type="file" onchange="APP.handleImg(this)">
-    <button id="catActionBtn" onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
+    <button id="catSubmitBtn" onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">SAVE CATEGORY</button>
 </div></div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add New Item</h3>
+    <h3>Food Item Settings</h3>
     <select id="nItemCat"></select>
     <input type="text" id="nItemEn" placeholder="Name (English)">
     <input type="text" id="nItemAm" placeholder="Name (Amharic)">
-    <input type="text" id="nItemIng" placeholder="Ingredients">
     <input type="number" id="nItemPrice" placeholder="Price">
     <input type="file" onchange="APP.handleImg(this)">
     <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD TO MENU</button>
 </div></div>
 
 <div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 style="color:var(--mocha); margin-bottom:5px;">Admin Login</h2>
-    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
-    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha); color:var(--p-yellow); width:100%; margin-top:15px; height:50px;">LOGIN</button>
+    <h2>Admin Login</h2>
+    <input type="text" id="uIn" placeholder="Username" autocomplete="off">
+    <input type="password" id="pIn" placeholder="Password" autocomplete="off">
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--mocha); color:var(--p-yellow); width:100%; margin-top:15px;">LOGIN</button>
 </div></div>
 
 <script>
@@ -111,14 +110,22 @@
         data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editIdx: -1,
 
         init: async function() {
+            this.loadCloud();
+            // Pull changes from other devices every 30 seconds
+            setInterval(() => this.loadCloud(), 30000);
+        },
+
+        loadCloud: async function() {
             try {
                 const r = await fetch(`${this.URL}?t=${Date.now()}`);
                 const j = await r.json();
-                this.data = j.items || [];
-                this.cats = j.cats || [];
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
-                this.render();
-            } catch(e) { console.error("Sync Error"); }
+                if(j.cats) {
+                    this.data = j.items;
+                    this.cats = j.cats;
+                    if(!this.activeCat && this.cats.length > 0) this.activeCat = this.cats[0].id;
+                    this.render();
+                }
+            } catch(e) { console.log("Waiting for cloud..."); }
         },
 
         render: function() {
@@ -135,87 +142,99 @@
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
                     <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
-                    <div><div class="food-title">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
+                    <div><div class="food-title" style="font-weight:600; font-size:18px;">${isEn ? i.en : i.am}</div><div class="price-tag">${i.price} ETB</div></div>
                 </div>`).join('');
             this.renderAdmin();
         },
 
         renderAdmin: function() {
+            // CATEGORY MANAGEMENT (Master)
             document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
-                <div class="cat-admin-card">
-                    <span><b>${c.en}</b> / ${c.am}</span>
+                <div style="background:#fff; padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span><b>${c.en}</b></span>
                     <div>
-                        <button onclick="APP.editCat(${idx})" style="background:#3498db; color:white; border:none; padding:5px 10px; border-radius:4px; margin-right:5px;">Edit</button>
-                        <button onclick="APP.deleteCat('${c.id}')" style="background:red; color:white; border:none; padding:5px 10px; border-radius:4px;">Del</button>
+                        <button onclick="APP.editCat(${idx})" style="padding:5px 10px; background:#3498db; color:white; border:none; border-radius:4px;">Edit/Upload</button>
+                        <button onclick="APP.deleteCat('${c.id}')" style="padding:5px 10px; background:#e74c3c; color:white; border:none; border-radius:4px;">Del</button>
                     </div>
                 </div>`).join('');
 
+            // ITEM MANAGEMENT (Master Table)
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td><input value="${i.en}" onchange="APP.data[${idx}].en=this.value"><input value="${i.am}" onchange="APP.data[${idx}].am=this.value"></td>
+                    <td>
+                        <button onclick="APP.move(${idx},-1)">▲</button><br><button onclick="APP.move(${idx},1)">▼</button>
+                    </td>
+                    <td style="width:50%">
+                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value">
+                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value">
+                        <select onchange="APP.data[${idx}].cat=this.value" style="font-size:11px;">
+                            ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>${c.en}</option>`).join('')}
+                        </select>
+                    </td>
                     <td><input type="number" class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
-                    <td><button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button><button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none;">Del</button></td>
+                    <td>
+                        <button onclick="APP.toggleHide(${idx})">${i.hidden?'S':'H'}</button>
+                        <button onclick="APP.deleteItem(${idx})" style="color:red; border:none; background:none; display:block; margin-top:5px;">Del</button>
+                    </td>
                 </tr>`).join('');
             document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
         },
 
         editCat: function(idx) {
-            this.editIdx = idx;
-            const c = this.cats[idx];
-            document.getElementById('catModalHeader').innerText = "Edit Category";
+            this.editIdx = idx; const c = this.cats[idx];
             document.getElementById('nCatId').value = c.id;
             document.getElementById('nCatEn').value = c.en;
             document.getElementById('nCatAm').value = c.am;
-            document.getElementById('catActionBtn').innerText = "SAVE CHANGES";
             this.openModal('catModal');
         },
 
         createNewCat: function() {
-            const id = document.getElementById('nCatId').value.trim();
-            if(!id) return alert("ID Required");
-            
-            const payload = { id, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp || (this.editIdx > -1 ? this.cats[this.editIdx].img : '') };
-            
+            const payload = { id: document.getElementById('nCatId').value, en: document.getElementById('nCatEn').value, am: document.getElementById('nCatAm').value, img: this.imgTmp || (this.editIdx > -1 ? this.cats[this.editIdx].img : '') };
             if(this.editIdx > -1) this.cats[this.editIdx] = payload;
             else this.cats.push(payload);
-            
-            this.editIdx = -1; this.imgTmp = '';
-            this.closeModals(); this.render();
+            this.editIdx = -1; this.imgTmp = ''; this.closeModals(); this.render();
         },
 
         createNewItem: function() {
-            this.data.push({ cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false });
+            this.data.push({ cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false });
             this.imgTmp = ''; this.closeModals(); this.render();
         },
 
-        saveToCloud: async function() {
-            const b = document.getElementById('cloudBtn');
-            b.innerText = "UPDATING..."; b.disabled = true;
-            try {
-                // IMPORTANT: Sending BOTH items and cats in one go
-                await fetch(this.URL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify({ items: this.data, cats: this.cats, updateTime: Date.now() }) 
-                });
-                alert("Master Update Successful!");
-                this.init(); // Refresh data from cloud
-            } catch(e) { alert("Sync Error"); }
-            finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
+        move: function(idx, dir) {
+            let t = idx + dir; if(t >= 0 && t < this.data.length) { [this.data[idx], this.data[t]] = [this.data[t], this.data[idx]]; this.render(); }
         },
 
-        setCat: function(id) { this.activeCat = id; this.render(); },
+        saveToCloud: async function() {
+            const b = document.getElementById('cloudBtn'); b.innerText = "SAVING..."; b.disabled = true;
+            try {
+                // Sending BOTH Cats and Items
+                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, sync: Date.now() }) });
+                alert("Saved to Google Sheets! All devices will sync in seconds.");
+                this.loadCloud();
+            } catch(e) { alert("Sync failed."); }
+            finally { b.innerText = "💾 SYNC ALL CHANGES GLOBALLY"; b.disabled = false; }
+        },
+
+        verifyLogin: function() {
+            const u = document.getElementById('uIn'), p = document.getElementById('pIn');
+            if(u.value==='admin' && p.value==='sgs'){
+                document.getElementById('adminDashboard').style.display='block';
+                u.value = ''; p.value = ''; // CLEAR IMMEDIATELY FOR SECURITY
+                this.closeModals();
+            } else { alert("Wrong Login"); u.value = ''; p.value = ''; }
+        },
+
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
+        setCat: function(id) { this.activeCat = id; this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
-        verifyLogin: function() { if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ document.getElementById('adminDashboard').style.display='block'; this.closeModals(); } },
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
-        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.editIdx = -1; document.getElementById('catModalHeader').innerText = "New Category"; document.getElementById('catActionBtn').innerText = "CREATE"; },
+        closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.editIdx = -1; },
         closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
-        deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
-        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.render(); } }
+        deleteCat: function(id) { if(confirm("Del?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
+        deleteItem: function(idx) { if(confirm("Del?")) { this.data.splice(idx, 1); this.render(); } }
     };
     window.onload = () => APP.init();
 </script>
