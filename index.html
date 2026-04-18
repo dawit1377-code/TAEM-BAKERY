@@ -6,7 +6,9 @@
     <title>SGS Hotel Menu - MASTER PROFESSIONAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 1. CSS BRAND VARIABLES */
+        /* BRAND SETTINGS - These are now controlled by the 
+            Javascript Configuration at the bottom.
+        */
         :root { 
             --p-green: #4F7942; 
             --dark-green: #3E5F34; 
@@ -16,9 +18,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
         
-        /* LOADING OVERLAY */
+        /* FIX 1: LOADING CSS */
         #pageLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 50px; height: 50px; border: 5px solid #eee; border-top: 5px solid var(--p-green); border-radius: 50%; animation: spin 1s linear infinite; }
+        .spinner { width: 45px; height: 45px; border: 5px solid #eee; border-top: 5px solid var(--p-green); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* HEADER */
@@ -46,12 +48,16 @@
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
         .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
         .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
+        
         .cat-row { background: white; padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; }
         .cat-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        
         table { width: 100%; border-collapse: collapse; }
         td { padding: 12px 5px; border-bottom: 1px solid #eee; }
+        
         .price-box { width: 90px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
         input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
         .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
     </style>
@@ -60,13 +66,13 @@
 
 <div id="pageLoader">
     <div class="spinner"></div>
-    <p style="margin-top:15px; font-weight:600; color:var(--dark-green)">Connecting to Kitchen...</p>
+    <p style="margin-top:10px; font-size:12px; font-weight:600; color:var(--dark-green)">Connecting...</p>
 </div>
 
 <header class="header">
     <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
     <div style="text-align:center;">
-        <h1 id="mainTitle">LOADING...</h1>
+        <h1 id="mainTitle">SGS HOTEL</h1>
         <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px;">MENU</div>
         <div id="vatNote" style="font-size:10px; opacity:0.8; margin-top:4px;">All prices include VAT</div>
     </div>
@@ -80,7 +86,7 @@
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--dark-green); padding:20px; color:white; border-radius:12px; margin-bottom: 20px;">
-        <h3 id="managerHeaderTitle">MANAGER</h3>
+        <h3 id="managerHeaderTitle">SGS MANAGER</h3>
         <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px;">&times;</button>
     </div>
     
@@ -136,59 +142,65 @@
 
 <script>
     /** * ============================================================
-     * 2. MASTER CONFIGURATION - CHANGE ONLY THESE 3 THINGS 
-     * ============================================================ */
+     * MASTER CONFIGURATION - CHANGE ONLY THESE 3 THINGS 
+     * ============================================================
+     */
     const CONFIG = {
         HOTEL_NAME_EN: "TAEM BAKERY & PASTRY",
-        HOTEL_NAME_AM: "ጣዕም ዳቦና ኬክ",
+        HOTEL_NAME_AM: "ጣዕም ዳቦ እና ኬክ",
         
-        BRAND_COLOR_PRIMARY: "#FFEF00",   /* The Yellow Accent */
-        BRAND_COLOR_SECONDARY: "#3B270C", /* The Dark Mocha */
+        BRAND_COLOR_PRIMARY: "#4F7942",   // --p-green
+        BRAND_COLOR_SECONDARY: "#3E5F34", // --dark-green
         
-        GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbzUs_R4tSRSWfZN5WWwoUa1_8qxHbs95fQk83xDwd9TZ9wzGnlxxLuEmFpTgfaZ2aKOnA/exec"
+        GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbxOhoU_NNDJ5DfaWavYYsYRuh8gpph0jOUTzj0yIxRVN4wlfe8MSwwUX0PTuDeoNScA/exec"
     };
 
+    /** * APP LOGIC - DO NOT TOUCH BELOW UNLESS NECESSARY
+     */
     const APP = {
         URL: CONFIG.GOOGLE_SHEET_URL,
         data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', editId: null,
 
         init: async function() {
-            // Apply Colors immediately
+            // Apply Brand Colors from Config
             document.documentElement.style.setProperty('--p-green', CONFIG.BRAND_COLOR_PRIMARY);
             document.documentElement.style.setProperty('--dark-green', CONFIG.BRAND_COLOR_SECONDARY);
             
             try {
+                // FIX 2: ?t= Cache-Buster for Category Stability
                 const r = await fetch(`${this.URL}?t=${Date.now()}`);
                 const j = await r.json();
                 this.data = j.items || [];
                 this.cats = j.cats || [];
                 if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
                 
-                // Remove loader once data is ready
+                // FIX 1: HIDE THE LOADER
                 document.getElementById('pageLoader').style.display = 'none';
                 this.render();
             } catch(e) { 
-                document.getElementById('pageLoader').innerHTML = "Check Connection & Refresh.";
+                console.error("Sync Error");
+                document.getElementById('pageLoader').innerText = "Connection Error.";
             }
         },
 
         render: function() {
             const isEn = this.lang === 'en';
+            
+            // Dynamic Header/Text from Config
             document.getElementById('mainTitle').innerText = isEn ? CONFIG.HOTEL_NAME_EN : CONFIG.HOTEL_NAME_AM;
             document.getElementById('managerHeaderTitle').innerText = isEn ? `${CONFIG.HOTEL_NAME_EN} MANAGER` : `${CONFIG.HOTEL_NAME_AM} መቆጣጠሪያ`;
             document.getElementById('loginWelcomeText').innerText = isEn ? `Welcome to ${CONFIG.HOTEL_NAME_EN}` : `ወደ ${CONFIG.HOTEL_NAME_AM} እንኳን ደህና መጡ`;
+            
             document.getElementById('subTitle').innerText = isEn ? "MENU" : "ሜኑ";
             document.getElementById('vatNote').innerText = isEn ? "All prices include VAT" : "ሁሉም ዋጋዎች ቫትን ያካትታሉ";
             document.getElementById('callBtnText').innerText = isEn ? "Call To Order" : "ለመዘዝ ይደውሉ";
 
-            // Categories
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
                     <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
                     <p>${isEn ? c.en : c.am}</p>
                 </div>`).join('');
 
-            // Items
             const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
             document.getElementById('menuListing').innerHTML = filtered.map(i => `
                 <div class="card">
@@ -196,7 +208,7 @@
                     <div>
                         <div class="food-title">${isEn ? i.en : i.am}</div>
                         <div class="food-ing">${i.ing || ''}</div>
-                        <div class="price-tag" style="background:var(--p-green); color:var(--dark-green); padding:2px 8px; border-radius:4px;">${i.price} ETB</div>
+                        <div class="price-tag">${i.price} ETB</div>
                     </div>
                 </div>`).join('');
             this.renderAdmin();
@@ -219,8 +231,8 @@
             document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
                 <tr style="${i.hidden ? 'opacity:0.3' : ''}">
                     <td style="width:55%">
-                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" style="font-weight:bold; height:35px;">
-                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" style="height:35px;">
+                        <input value="${i.en}" onchange="APP.data[${idx}].en=this.value" placeholder="EN Title" style="font-weight:bold; height:35px;">
+                        <input value="${i.am}" onchange="APP.data[${idx}].am=this.value" placeholder="AM Title" style="height:35px;">
                         <input value="${i.ing || ''}" onchange="APP.data[${idx}].ing=this.value" placeholder="Ingredients" style="font-size:11px; height:35px;">
                         <select onchange="APP.data[${idx}].cat=this.value" style="font-size:11px; height:35px; color:blue;">
                             ${this.cats.map(c => `<option value="${c.id}" ${c.id==i.cat?'selected':''}>Move to: ${c.en}</option>`).join('')}
@@ -239,24 +251,26 @@
         setCat: function(id) { this.activeCat = id; this.render(); },
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
+        closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex' && e.target.className==='overlay') this.closeModals(); },
         verifyLogin: function() { 
             if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='sgs'){ 
                 document.getElementById('adminDashboard').style.display='block'; 
+                document.getElementById('uIn').value=''; document.getElementById('pIn').value='';
                 this.closeModals(); 
             } else { alert("Login Failed"); }
-            document.getElementById('uIn').value=''; document.getElementById('pIn').value='';
         },
+
         closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); this.imgTmp = ''; },
-        closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
         openModal: function(id) { document.getElementById(id).style.display='flex'; },
         handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
         
         updateCatImg: function(idx, input) {
             const r = new FileReader();
-            r.onload = (e) => { this.cats[idx].img = e.target.result; alert("Cat Image updated locally. Sync to save."); };
+            r.onload = (e) => { this.cats[idx].img = e.target.result; alert("Image captured! Click Sync to save."); };
             r.readAsDataURL(input.files[0]);
         },
+
         updateItemImg: function(idx, input) {
             const r = new FileReader();
             r.onload = (e) => { this.data[idx].img = e.target.result; this.renderAdmin(); };
@@ -267,20 +281,22 @@
         applyCatRename: function() { const c = this.cats.find(x => x.id == this.editId); if(c){ c.en=document.getElementById('eCatEn').value; c.am=document.getElementById('eCatAm').value; this.closeModals(); this.render(); } },
         deleteCat: function(id) { if(confirm("Delete Category?")) { this.cats = this.cats.filter(c => c.id != id); this.render(); } },
         createNewCat: function() { const id = document.getElementById('nCatId').value.trim().toLowerCase(); if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.closeModals(); this.render(); } },
+
         createNewItem: function() {
             this.data.push({ id: Date.now(), cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false });
             this.closeModals(); this.render();
         },
         toggleHide: function(idx) { this.data[idx].hidden = !this.data[idx].hidden; this.render(); },
-        deleteItem: function(idx) { if(confirm("Delete?")) { this.data.splice(idx, 1); this.render(); } },
+        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.render(); } },
 
         saveToCloud: async function() {
-            const b = document.getElementById('cloudBtn'); b.innerText = "SAVING..."; b.disabled = true;
+            const b = document.getElementById('cloudBtn');
+            b.innerText = "UPDATING..."; b.disabled = true;
             try {
-                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
-                alert("Cloud Sync Successful!");
-                this.init();
-            } catch(e) { alert("Sync Error"); }
+                // FIX 2: SENDS BOTH DATA AND CATS TO PERSIST
+                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
+                alert("Cloud Updated Successfully!"); this.init();
+            } catch(e) { alert("Sync Failed"); }
             finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
         }
     };
