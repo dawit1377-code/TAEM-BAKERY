@@ -44,7 +44,10 @@
     padding: 12px; 
     border: 1px solid #f0f0f0; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    overflow: hidden; /* Prevents anything from leaking out */ }
+    overflow: hidden; /* Prevents anything from leaking out */ } .card > div:last-child {
+    flex: 1; 
+    min-width: 0; 
+}
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
         .food-title { color: var(--p-green); 
     font-size: 20px; 
@@ -55,11 +58,8 @@
         .food-ing { font-size: 14px; 
     color: #777; 
     font-style: italic; 
-    word-wrap: break-word; /* Fix for long ingredient lists */
-    overflow-wrap: break-word;
-    display: block; /* Ensures it takes up its own line and stays contained */
-    margin-top: 4px;
-    max-width: 100%; /* Keeps it from pushing the card width out */ }
+    white-space: normal; 
+    word-wrap: break-word; }
         .price-tag { font-weight: bold; color: var(--dark-green); margin-top: 5px; font-size: 18px; }
 
         .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
