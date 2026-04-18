@@ -37,19 +37,20 @@
         /* MENU CARDS */
         .container { padding: 15px; }
         .card { display: flex; 
-    align-items: flex-start; /* Change from center to top for long text */
+    align-items: flex-start; 
     background: white; 
     border-radius: 12px; 
     margin-bottom: 15px; 
     padding: 12px; 
     border: 1px solid #f0f0f0; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    min-height: 125px; /* Ensures card is at least as tall as the image */ }
+    overflow: hidden; /* Prevents anything from leaking out */ }
         .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
         .food-title { color: var(--p-green); 
     font-size: 20px; 
     font-weight: 600; 
-    word-wrap: break-word; /* Fix for long titles */
+    white-space: normal; /* Forces text to wrap */
+    word-wrap: break-word;
     overflow-wrap: break-word; }
         .food-ing { font-size: 14px; 
     color: #777; 
