@@ -80,6 +80,20 @@
         
         .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:4000; align-items:center; justify-content:center; }
         .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; }
+   #foodModal .modal-content {
+    max-width: 90%;
+    margin: 10% auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    background: white;
+    animation: zoomIn 0.3s;
+}
+
+@keyframes zoomIn {
+    from {transform: scale(0.8); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)">
@@ -321,6 +335,30 @@
         }
     };
     window.onload = () => APP.init();
+// Add onclick="openFoodDetail(${idx})" to your card div
+html += `<div class="card" onclick="openFoodDetail(${idx})">`;
+function openFoodDetail(index) {
+    const item = APP.data[index];
+    document.getElementById('modalImg').src = item.img;
+    document.getElementById('modalTitle').innerText = item.name;
+    document.getElementById('modalIng').innerText = item.ing;
+    document.getElementById('modalPrice').innerText = item.price;
+    document.getElementById('foodModal').style.display = 'block';
+}
+
+// This allows clicking "any free space" to close it
+function closeFoodModal(event) {
+    document.getElementById('foodModal').style.display = 'none';
+}
 </script>
+<div id="foodModal" class="modal" onclick="closeFoodModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close" onclick="document.getElementById('foodModal').style.display='none'">&times;</span>
+        <img id="modalImg" src="" style="width:100%; border-radius:12px; margin-bottom:15px;">
+        <h2 id="modalTitle" style="color:var(--dark-green);"></h2>
+        <p id="modalIng" style="font-style:italic; color:#666; margin:10px 0;"></p>
+        <h3 id="modalPrice" style="color:var(--p-green); font-size:24px;"></h3>
+    </div>
+</div>
 </body>
 </html>
