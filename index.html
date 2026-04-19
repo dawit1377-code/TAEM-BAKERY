@@ -273,7 +273,7 @@
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
         closeOnOutside: function(e) { if(document.getElementById('loginOverlay').style.display==='flex' && e.target.className==='overlay') this.closeModals(); },
         verifyLogin: function() { 
-            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='219219){ 
+            if(document.getElementById('uIn').value==='admin' && document.getElementById('pIn').value==='taem){ 
                 document.getElementById('adminDashboard').style.display='block'; 
                 document.getElementById('uIn').value=''; document.getElementById('pIn').value='';
                 this.closeModals(); 
