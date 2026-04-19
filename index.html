@@ -336,7 +336,7 @@
     };
     window.onload = () => APP.init();
 // Add onclick="openFoodDetail(${idx})" to your card div
-html += `<div class="card" onclick="openFoodDetail(${idx})">`;
+
 function openFoodDetail(index) {
     const item = APP.data[index];
     document.getElementById('modalImg').src = item.img;
@@ -346,10 +346,11 @@ function openFoodDetail(index) {
     document.getElementById('foodModal').style.display = 'block';
 }
 
-// This allows clicking "any free space" to close it
 function closeFoodModal(event) {
     document.getElementById('foodModal').style.display = 'none';
 }
+
+
 </script>
 <div id="foodModal" class="modal" onclick="closeFoodModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
@@ -359,6 +360,7 @@ function closeFoodModal(event) {
         <p id="modalIng" style="font-style:italic; color:#666; margin:10px 0;"></p>
         <h3 id="modalPrice" style="color:var(--p-green); font-size:24px;"></h3>
     </div>
-</div>
+    </div>
+    
 </body>
 </html>
