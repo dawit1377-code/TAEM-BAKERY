@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY Menu - HD MASTER</title>
+    <title>TAEM BAKERY & PASTRY Menu - MASTER PROFESSIONAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -37,20 +37,9 @@
         .food-ing { font-size: 14px; color: #777; font-style: italic; white-space: normal; word-wrap: break-word; }
         .price-tag { font-weight: bold; color: var(--dark-green); margin-top: 5px; font-size: 18px; } 
 
-        /* HD FOOD DETAIL MODAL */
-        #foodModal .modal-content { max-width: 90%; margin: 5% auto; padding: 20px; text-align: center; border-radius: 15px; animation: zoomIn 0.25s ease-out; position: relative; background: white; }
-        #modalImg { 
-            width: 100%; 
-            max-height: 65vh; 
-            border-radius: 12px; 
-            object-fit: contain; 
-            margin-bottom: 15px; 
-            /* HD RENDERING RULES */
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: crisp-edges;
-            image-rendering: high-quality;
-        }
-        @keyframes zoomIn { from {transform: scale(0.9); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+        /* FOOD DETAIL MODAL STYLES */
+        #foodModal .modal-content { max-width: 90%; margin: 10% auto; padding: 20px; text-align: center; border-radius: 15px; animation: zoomIn 0.3s; position: relative; }
+        @keyframes zoomIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
 
         .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); } 
 
@@ -60,9 +49,9 @@
         .price-box { width: 130px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
         input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
         
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:4000; align-items:center; justify-content:center; overflow-y: auto; }
-        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .close { position: absolute; top: 5px; right: 15px; font-size: 35px; cursor: pointer; color: #333; z-index: 10; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:4000; align-items:center; justify-content:center; overflow-y: auto; }
+        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; position: relative; }
+        .close { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; color: #333; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)"> 
@@ -90,10 +79,10 @@
 <div id="foodModal" class="overlay" onclick="APP.closeFoodModal()">
     <div class="modal" onclick="event.stopPropagation()">
         <span class="close" onclick="APP.closeFoodModal()">&times;</span>
-        <img id="modalImg" src="">
-        <h2 id="modalTitle" style="color:var(--dark-green); margin-bottom:5px; font-family:'Playfair Display';"></h2>
-        <p id="modalIng" style="font-style:italic; color:#666; margin-bottom:15px; font-size:14px;"></p>
-        <h3 id="modalPrice" style="color:var(--p-green); font-size:24px; font-weight:bold;"></h3>
+        <img id="modalImg" src="" style="width:100%; height:250px; border-radius:12px; object-fit:cover; margin-bottom:15px;">
+        <h2 id="modalTitle" style="color:var(--dark-green); margin-bottom:10px;"></h2>
+        <p id="modalIng" style="font-style:italic; color:#666; margin-bottom:15px; line-height:1.4;"></p>
+        <h3 id="modalPrice" style="color:var(--p-green); font-size:24px; border-top:1px solid #eee; pt:10px;"></h3>
     </div>
 </div>
 
