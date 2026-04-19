@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAEM BAKERY & PASTRY Menu - HD MASTER</title>
+    <title>TAEM BAKERY & PASTRY - HD TURBO</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -12,74 +12,73 @@
             --bg: #ffffff; 
         } 
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 100px; }
+        /* CORE SPEED & RENDERING */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; text-rendering: optimizeLegibility; }
+        body { background: var(--bg); color: #333; font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; padding-bottom: 80px; overscroll-behavior-y: contain; }
         
         #pageLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 45px; height: 45px; border: 5px solid #eee; border-top: 5px solid var(--p-green); border-radius: 50%; animation: spin 1s linear infinite; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--p-green); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } 
 
-        .header { background: var(--dark-green); color: var(--p-green); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 130px; }
-        .header h1 { font-family: 'Playfair Display'; font-size: 28px; font-weight: 800; text-align: center; flex-grow: 1; }
+        .header { background: var(--dark-green); color: var(--p-green); padding: 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 110px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header h1 { font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; text-align: center; flex-grow: 1; }
         
-        .nav-bar { display: flex; overflow-x: auto; padding: 15px 10px; background: #fff; position: sticky; top: 130px; z-index: 900; border-bottom: 1px solid #eee; min-height: 195px; scrollbar-width: none; }
-        .nav-item { text-align: center; min-width: 150px; opacity: 0.5; cursor: pointer; flex-shrink: 0; border-bottom: 4px solid transparent; }
-        .nav-item.active { opacity: 1; font-weight: bold; color: var(--p-green); border-bottom-color: var(--p-green); }
-        .nav-item img { width: 125px; height: 125px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; margin-bottom: 8px; }
-        .nav-item p { font-size: 16px; font-weight: 600; } 
+        /* CATEGORY BAR - FASTER SCROLLING */
+        .nav-bar { display: flex; overflow-x: auto; padding: 10px 5px; background: #fff; position: sticky; top: 110px; z-index: 900; border-bottom: 1px solid #eee; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .nav-item { text-align: center; min-width: 100px; opacity: 0.6; cursor: pointer; flex-shrink: 0; margin: 0 5px; transition: opacity 0.2s; }
+        .nav-item.active { opacity: 1; font-weight: bold; color: var(--p-green); }
+        .nav-item img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #eee; margin-bottom: 5px; image-rendering: -webkit-optimize-contrast; }
 
-        .container { padding: 15px; }
-        .card { display: flex; align-items: flex-start; background: white; border-radius: 12px; margin-bottom: 15px; padding: 12px; border: 1px solid #f0f0f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; cursor: pointer; }
-        .card > div:last-child { flex: 1; min-width: 0; }
+        .container { padding: 10px; display: grid; gap: 12px; }
+        .card { display: flex; align-items: center; background: white; border-radius: 12px; padding: 10px; border: 1px solid #f0f0f0; box-shadow: 0 2px 5px rgba(0,0,0,0.03); cursor: pointer; will-change: transform; }
         
-        .food-img { width: 125px; height: 125px; border-radius: 10px; object-fit: cover; margin-right: 15px; flex-shrink: 0; }
-        .food-title { color: var(--p-green); font-size: 20px; font-weight: 600; white-space: normal; word-wrap: break-word; }
-        .food-ing { font-size: 14px; color: #777; font-style: italic; white-space: normal; word-wrap: break-word; }
-        .price-tag { font-weight: bold; color: var(--dark-green); margin-top: 5px; font-size: 18px; } 
+        /* HD THUMBNAILS */
+        .food-img { width: 100px; height: 100px; border-radius: 8px; object-fit: cover; margin-right: 12px; flex-shrink: 0; image-rendering: -webkit-optimize-contrast; background: #f9f9f9; }
+        .food-title { color: var(--dark-green); font-size: 17px; font-weight: 600; }
+        .food-ing { font-size: 13px; color: #888; margin: 2px 0; }
+        .price-tag { font-weight: bold; color: var(--p-green); font-size: 16px; } 
 
-        /* HD FOOD DETAIL MODAL */
-        #foodModal .modal-content { max-width: 90%; margin: 5% auto; padding: 20px; text-align: center; border-radius: 15px; animation: zoomIn 0.25s ease-out; position: relative; background: white; }
+        /* ULTRA HD MODAL RENDERING */
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:4000; align-items:center; justify-content:center; backdrop-filter: blur(5px); }
+        .modal { background:white; padding:20px; border-radius:20px; width:90%; max-width:450px; position: relative; animation: popUp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
         #modalImg { 
             width: 100%; 
-            max-height: 65vh; 
+            max-height: 55vh; 
             border-radius: 12px; 
             object-fit: contain; 
             margin-bottom: 15px; 
-            /* HD RENDERING RULES */
+            display: block;
+            /* CRITICAL HD FIXES */
             image-rendering: -webkit-optimize-contrast; 
             image-rendering: crisp-edges;
             image-rendering: high-quality;
+            transform: translateZ(0); /* Forces GPU acceleration */
         }
-        @keyframes zoomIn { from {transform: scale(0.9); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+        @keyframes popUp { from {transform: scale(0.85); opacity: 0;} to {transform: scale(1); opacity: 1;} }
 
-        .call-order-btn { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: white; padding: 16px 35px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); } 
+        .close { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; color: #000; font-weight: bold; }
+        .call-order-btn { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--dark-green); color: var(--p-green); padding: 14px 30px; border-radius: 50px; text-decoration: none; z-index: 2000; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.4); font-size: 16px; border: 1px solid var(--p-green); } 
 
         #adminDashboard { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:3000; padding:15px; overflow-y: auto; }
-        .admin-section { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 25px; background: #fafafa; }
-        .btn { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; text-align: center; }
-        .price-box { width: 130px !important; height: 45px; font-weight: bold; text-align: center; border: 2px solid var(--p-green) !important; color: var(--dark-green); }
-        input, select { width: 100%; padding: 12px; margin: 4px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
-        
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); z-index:4000; align-items:center; justify-content:center; overflow-y: auto; }
-        .modal { background:white; padding:25px; border-radius:15px; width:92%; max-width:400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .close { position: absolute; top: 5px; right: 15px; font-size: 35px; cursor: pointer; color: #333; z-index: 10; }
+        input, select { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
     </style>
 </head>
 <body onclick="APP.closeOnOutside(event)"> 
 
 <div id="pageLoader">
     <div class="spinner"></div>
-    <p style="margin-top:10px; font-size:12px; font-weight:600; color:var(--dark-green)">Connecting...</p>
+    <p style="margin-top:15px; font-weight:bold; color:var(--dark-green)">Optimizing HD Content...</p>
 </div> 
 
 <header class="header">
-    <div onclick="APP.showLogin(event)" style="cursor:pointer; font-size:28px; padding:10px;">☰</div>
+    <div onclick="APP.showLogin(event)" style="font-size:24px; padding:10px;">☰</div>
     <div style="text-align:center;">
         <h1 id="mainTitle">TAEM BAKERY</h1>
-        <div id="subTitle" style="font-size:12px; font-weight:bold; letter-spacing:3px;">MENU</div>
-        <div id="vatNote" style="font-size:10px; opacity:0.8; margin-top:4px;">All prices include VAT</div>
+        <div style="font-size:10px; letter-spacing:2px; font-weight:bold;">HD DIGITAL MENU</div>
     </div>
-    <button onclick="APP.toggleLang()" style="background:white; color:var(--dark-green); border:none; padding:10px 15px; border-radius:20px; font-weight:bold;">EN/አማ</button>
+    <button onclick="APP.toggleLang()" style="background:var(--p-green); color:var(--dark-green); border:none; padding:8px 12px; border-radius:15px; font-weight:bold; font-size:12px;">EN/አማ</button>
 </header> 
 
 <nav class="nav-bar" id="categoryNav"></nav>
@@ -90,97 +89,82 @@
 <div id="foodModal" class="overlay" onclick="APP.closeFoodModal()">
     <div class="modal" onclick="event.stopPropagation()">
         <span class="close" onclick="APP.closeFoodModal()">&times;</span>
-        <img id="modalImg" src="">
-        <h2 id="modalTitle" style="color:var(--dark-green); margin-bottom:5px; font-family:'Playfair Display';"></h2>
-        <p id="modalIng" style="font-style:italic; color:#666; margin-bottom:15px; font-size:14px;"></p>
-        <h3 id="modalPrice" style="color:var(--p-green); font-size:24px; font-weight:bold;"></h3>
+        <img id="modalImg" src="" alt="Food Image">
+        <h2 id="modalTitle" style="color:var(--dark-green); font-family:'Playfair Display'; margin-bottom:5px;"></h2>
+        <p id="modalIng" style="font-style:italic; color:#777; font-size:13px; margin-bottom:15px;"></p>
+        <div id="modalPrice" style="color:var(--p-green); font-size:22px; font-weight:bold; border-top:1px solid #eee; padding-top:10px;"></div>
     </div>
 </div>
 
 <div id="adminDashboard">
     <div style="display:flex; justify-content:space-between; align-items:center; background:var(--dark-green); padding:20px; color:white; border-radius:12px; margin-bottom: 20px;">
-        <h3 id="managerHeaderTitle">MANAGER</h3>
-        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:40px;">&times;</button>
+        <h3>MANAGER MODE</h3>
+        <button onclick="APP.closeAdmin()" style="color:white; border:none; background:none; font-size:30px;">&times;</button>
     </div>
-    <div class="admin-section">
-        <h4>1. Category Management</h4>
-        <div id="adminCatList"></div>
-        <button class="btn" style="background:#8e44ad; width:100%; margin-top:15px; height:55px;" onclick="APP.openModal('catModal')">+ ADD NEW CATEGORY</button>
-    </div> 
-    <div class="admin-section">
-        <h4>2. Menu Items Management</h4>
-        <button class="btn" style="background:#27ae60; width:100%; margin-bottom:20px; height:55px;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD ITEM</button>
-        <div style="overflow-x:auto;"><table><tbody id="adminItemBody"></tbody></table></div>
+    <div id="adminControls" style="padding:10px;">
+        <button class="btn" style="background:#27ae60; color:white;" onclick="APP.openModal('itemModal')">+ ADD NEW FOOD</button>
+        <button id="cloudBtn" onclick="APP.saveToCloud()" style="background:var(--p-green); color:var(--dark-green); margin-top:20px;" class="btn">💾 SYNC ALL CHANGES</button>
     </div>
-    <button id="cloudBtn" onclick="APP.saveToCloud()" style="width:100%; padding:22px; background:#27ae60; color:white; border:none; border-radius:12px; font-weight:bold; font-size:18px; position:sticky; bottom:10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);">💾 SYNC ALL CHANGES</button>
-</div> 
-
-<div id="editCatModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Rename Category</h3>
-    <input type="text" id="eCatEn" placeholder="English Name"><input type="text" id="eCatAm" placeholder="Amharic Name">
-    <button onclick="APP.applyCatRename()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">SAVE RENAME</button>
-</div></div> 
-
-<div id="catModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>New Category</h3>
-    <input type="text" id="nCatId" placeholder="ID (e.g. food)"><input type="text" id="nCatEn" placeholder="English Name"><input type="text" id="nCatAm" placeholder="Amharic Name"><input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewCat()" class="btn" style="background:#8e44ad; width:100%; margin-top:15px;">CREATE</button>
-</div></div> 
+</div>
 
 <div id="itemModal" class="overlay"><div class="modal" onclick="event.stopPropagation()">
-    <h3>Add New Food Item</h3>
-    <select id="nItemCat"></select><input type="text" id="nItemEn" placeholder="Name (English)"><input type="text" id="nItemAm" placeholder="Name (Amharic)"><input type="text" id="nItemIng" placeholder="Ingredients"><input type="text" id="nItemPrice" placeholder="Price"><input type="file" onchange="APP.handleImg(this)">
-    <button onclick="APP.createNewItem()" class="btn" style="background:#27ae60; width:100%; margin-top:15px;">ADD TO MENU</button>
-</div></div> 
+    <h3>New Item</h3>
+    <select id="nItemCat"></select>
+    <input type="text" id="nItemEn" placeholder="English Name">
+    <input type="text" id="nItemAm" placeholder="Amharic Name">
+    <input type="text" id="nItemPrice" placeholder="Price">
+    <input type="file" onchange="APP.handleImg(this)" accept="image/*">
+    <button onclick="APP.createNewItem()" class="btn" style="background:var(--dark-green); color:white;">ADD TO MENU</button>
+</div></div>
 
-<div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()" style="text-align:center;">
-    <h2 id="loginWelcomeText" style="color:var(--dark-green); margin-bottom:5px;">Welcome</h2>
-    <input type="text" id="uIn" placeholder="Username" style="text-align:center;"><input type="password" id="pIn" placeholder="Password" style="text-align:center;">
-    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--dark-green); width:100%; margin-top:15px; height:50px;">LOGIN</button>
-</div></div> 
+<div id="loginOverlay" class="overlay"><div class="modal" onclick="event.stopPropagation()">
+    <h2 style="text-align:center">Admin Login</h2>
+    <input type="text" id="uIn" placeholder="Username" style="text-align:center;">
+    <input type="password" id="pIn" placeholder="Password" style="text-align:center;">
+    <button onclick="APP.verifyLogin()" class="btn" style="background:var(--dark-green); color:white;">LOGIN</button>
+</div></div>
 
 <script>
     const CONFIG = {
         HOTEL_NAME_EN: "TAEM BAKERY & PASTRY",
         HOTEL_NAME_AM: "ጣዕም ዳቦ እና ኬክ",
-        BRAND_COLOR_PRIMARY: "#FEC20C", 
-        BRAND_COLOR_SECONDARY: "#3B270C", 
-        GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbxOhoU_NNDJ5DfaWavYYsYRuh8gpph0jOUTzj0yIxRVN4wlfe8MSwwUX0PTuDeoNScA/exec"
+        URL: "https://script.google.com/macros/s/AKfycbxOhoU_NNDJ5DfaWavYYsYRuh8gpph0jOUTzj0yIxRVN4wlfe8MSwwUX0PTuDeoNScA/exec"
     }; 
 
     const APP = {
-        URL: CONFIG.GOOGLE_SHEET_URL,
         data: [], cats: [], lang: 'en', activeCat: '', imgTmp: '', 
 
         init: async function() {
-            document.documentElement.style.setProperty('--p-green', CONFIG.BRAND_COLOR_PRIMARY);
-            document.documentElement.style.setProperty('--dark-green', CONFIG.BRAND_COLOR_SECONDARY);
             try {
-                const r = await fetch(`${this.URL}?t=${Date.now()}`);
+                // High-speed fetch with cache busting
+                const r = await fetch(`${CONFIG.URL}?t=${Date.now()}`);
                 const j = await r.json();
                 this.data = j.items || [];
                 this.cats = j.cats || [];
-                if(this.cats.length > 0 && !this.activeCat) this.activeCat = this.cats[0].id;
+                if(this.cats.length > 0) this.activeCat = this.cats[0].id;
                 document.getElementById('pageLoader').style.display = 'none';
                 this.render();
-            } catch(e) { document.getElementById('pageLoader').innerText = "Connection Error."; }
+            } catch(e) { document.getElementById('pageLoader').innerHTML = "Check Internet Connection"; }
         }, 
 
         render: function() {
             const isEn = this.lang === 'en';
             document.getElementById('mainTitle').innerText = isEn ? CONFIG.HOTEL_NAME_EN : CONFIG.HOTEL_NAME_AM;
+            
+            // Render Categories
             document.getElementById('categoryNav').innerHTML = this.cats.map(c => `
                 <div class="nav-item ${this.activeCat == c.id ? 'active' : ''}" onclick="APP.setCat('${c.id}')">
-                    <img src="${c.img || ''}" onerror="this.src='https://via.placeholder.com/150'">
-                    <p>${isEn ? c.en : c.am}</p>
+                    <img src="${c.img || ''}" loading="lazy">
+                    <p style="font-size:12px;">${isEn ? c.en : c.am}</p>
                 </div>`).join(''); 
 
-            const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat) && !i.hidden);
+            // Render Items with Lazy Loading for Speed
+            const filtered = this.data.filter(i => String(i.cat) === String(this.activeCat));
             document.getElementById('menuListing').innerHTML = filtered.map((i, idx) => {
-                const realIdx = this.data.indexOf(i);
+                const globalIdx = this.data.indexOf(i);
                 return `
-                <div class="card" onclick="APP.openFoodDetail(${realIdx})">
-                    <img src="${i.img || ''}" class="food-img" onerror="this.src='https://via.placeholder.com/150'">
+                <div class="card" onclick="APP.openFoodDetail(${globalIdx})">
+                    <img src="${i.img || ''}" class="food-img" loading="lazy">
                     <div>
                         <div class="food-title">${isEn ? i.en : i.am}</div>
                         <div class="food-ing">${i.ing || ''}</div>
@@ -188,67 +172,66 @@
                     </div>
                 </div>`;
             }).join('');
-            this.renderAdmin();
         },
 
         openFoodDetail: function(index) {
             const item = this.data[index];
             const isEn = this.lang === 'en';
-            document.getElementById('modalImg').src = item.img || 'https://via.placeholder.com/150';
+            const mImg = document.getElementById('modalImg');
+            
+            // Set source first for speed
+            mImg.src = item.img || '';
             document.getElementById('modalTitle').innerText = isEn ? item.en : item.am;
             document.getElementById('modalIng').innerText = item.ing || '';
             document.getElementById('modalPrice').innerText = item.price + " ETB";
+            
             document.getElementById('foodModal').style.display = 'flex';
         },
 
         closeFoodModal: function() { document.getElementById('foodModal').style.display = 'none'; },
-
-        renderAdmin: function() {
-            document.getElementById('adminCatList').innerHTML = this.cats.map((c, idx) => `
-                <div class="cat-row" style="background:white; padding:10px; margin-bottom:5px; border-radius:8px; border:1px solid #eee;">
-                    <span><b>${c.en}</b></span>
-                    <button onclick="APP.prepRename('${c.id}')" style="float:right">Edit</button>
-                </div>`).join(''); 
-
-            document.getElementById('adminItemBody').innerHTML = this.data.map((i, idx) => `
-                <tr style="${i.hidden ? 'opacity:0.3' : ''}">
-                    <td><input value="${i.en}" onchange="APP.data[${idx}].en=this.value"></td>
-                    <td><input class="price-box" value="${i.price}" onchange="APP.data[${idx}].price=this.value"></td>
-                    <td><button onclick="APP.deleteItem(${idx})" style="color:red">Del</button></td>
-                </tr>`).join('');
-            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
-        }, 
-
-        verifyLogin: function() { 
-            const u = document.getElementById('uIn').value;
-            const p = document.getElementById('pIn').value;
-            if(u === 'admin' && p === 'taem'){ 
-                document.getElementById('adminDashboard').style.display='block'; 
-                this.closeModals(); 
-            } else { alert("Login Failed"); }
-        }, 
-
         setCat: function(id) { this.activeCat = id; this.render(); },
         toggleLang: function() { this.lang = (this.lang === 'en' ? 'am' : 'en'); this.render(); },
         showLogin: function(e) { e.stopPropagation(); document.getElementById('loginOverlay').style.display='flex'; },
-        closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
-        closeAdmin: function() { document.getElementById('adminDashboard').style.display='none'; },
         closeModals: function() { document.querySelectorAll('.overlay').forEach(o => o.style.display='none'); },
-        openModal: function(id) { document.getElementById(id).style.display='flex'; },
-        handleImg: function(input) { const r = new FileReader(); r.onload = (e) => this.imgTmp = e.target.result; r.readAsDataURL(input.files[0]); },
-        updateItemImg: function(idx, input) { const r = new FileReader(); r.onload = (e) => { this.data[idx].img = e.target.result; this.renderAdmin(); }; r.readAsDataURL(input.files[0]); },
-        prepRename: function(id) { this.editId = id; const c = this.cats.find(x => x.id == id); document.getElementById('eCatEn').value=c.en; document.getElementById('eCatAm').value=c.am; this.openModal('editCatModal'); },
-        applyCatRename: function() { const c = this.cats.find(x => x.id == this.editId); if(c){ c.en=document.getElementById('eCatEn').value; c.am=document.getElementById('eCatAm').value; this.closeModals(); this.render(); } },
-        createNewCat: function() { const id = document.getElementById('nCatId').value.trim().toLowerCase(); if(id){ this.cats.push({id, en:document.getElementById('nCatEn').value, am:document.getElementById('nCatAm').value, img:this.imgTmp}); this.closeModals(); this.render(); } }, 
-        createNewItem: function() { this.data.push({ id: Date.now(), cat: document.getElementById('nItemCat').value, en: document.getElementById('nItemEn').value, am: document.getElementById('nItemAm').value, ing: document.getElementById('nItemIng').value, price: document.getElementById('nItemPrice').value, img: this.imgTmp, hidden: false }); this.closeModals(); this.render(); },
-        deleteItem: function(idx) { if(confirm("Delete Item?")) { this.data.splice(idx, 1); this.render(); } }, 
+        closeOnOutside: function(e) { if(e.target.className === 'overlay') this.closeModals(); },
+        openModal: function(id) { 
+            document.getElementById('nItemCat').innerHTML = this.cats.map(c => `<option value="${c.id}">${c.en}</option>`).join('');
+            document.getElementById(id).style.display='flex'; 
+        },
+
+        handleImg: function(input) {
+            const r = new FileReader();
+            r.onload = (e) => { this.imgTmp = e.target.result; };
+            r.readAsDataURL(input.files[0]);
+        },
+
+        createNewItem: function() {
+            this.data.push({
+                id: Date.now(),
+                cat: document.getElementById('nItemCat').value,
+                en: document.getElementById('nItemEn').value,
+                am: document.getElementById('nItemAm').value,
+                price: document.getElementById('nItemPrice').value,
+                img: this.imgTmp
+            });
+            this.closeModals();
+            this.render();
+        },
+
+        verifyLogin: function() {
+            if(document.getElementById('uIn').value === 'admin' && document.getElementById('pIn').value === 'taem') {
+                document.getElementById('adminDashboard').style.display = 'block';
+                this.closeModals();
+            }
+        },
 
         saveToCloud: async function() {
-            const b = document.getElementById('cloudBtn'); b.innerText = "UPDATING..."; b.disabled = true;
+            const b = document.getElementById('cloudBtn'); b.innerText = "SAVING...";
             try {
-                await fetch(this.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats, lastUpdate: Date.now() }) });
-                alert("Cloud Updated!"); this.init();
-            } catch(e) { alert("Sync Failed"); } finally { b.innerText = "💾 SYNC ALL CHANGES"; b.disabled = false; }
+                await fetch(CONFIG.URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ items: this.data, cats: this.cats }) });
+                alert("Updated Successfully!");
+                location.reload();
+            } catch(e) { alert("Error Syncing"); b.innerText = "RETRY SYNC"; }
         }
     };
     window.onload = () => APP.init();
